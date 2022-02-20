@@ -1,4 +1,5 @@
 ﻿  game.cpp
   main.cpp
   Generating Code...
-  Pokemon Clone.vcxproj -> C:\Users\markp\source\repos\Projects\Pokemon Clone\x64\Debug\Pokemon Clone.exe
+Pokemon Clone.rc(4): fatal error RC1015: cannot open include file 'resource.h'.
+  

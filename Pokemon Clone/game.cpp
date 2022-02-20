@@ -67,6 +67,9 @@ void Game::initializeWindow() { // Open window
 	SDL_UpdateWindowSurface(_window);
 
 	SDL_Delay(2000);
+
+	// Render image to window
+	SDL_Surface* image = SDL_LoadBMP("assets/pokemon/sprites.1.png");
 }
 
 Game::Game() {
