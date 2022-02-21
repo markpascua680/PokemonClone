@@ -13,18 +13,18 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include <SDL.h>
 #include <fstream>
 #include <sstream>
 #include <iostream>
 #include <string>
 #include <map>
+#include "interface.h"
 
 class Game
 {
 	// Initialization
 	void initializePokemon();
-	void initializeWindow();
+	void initializeAttackList();
 
 	// Game States
 
@@ -53,11 +53,7 @@ private:
 
 	std::map<std::string, Pokemon> _pokedex;
 
-	// Game UI
-	SDL_Window* _window;
-	SDL_Surface* _surface;
+	Interface _interface;
 };
-
-
 
 #endif

@@ -41,49 +41,36 @@ void Game::initializePokemon() { // Load the pokemon from database
 	pokemonData.close();
 }
 
-void Game::initializeWindow() { // Open window
+void Game::initializeAttackList() {
 
-	// End program if fail to initialize
-	if (SDL_Init(SDL_INIT_EVERYTHING < 0)) { 
-		std::cout << "UNABLE TO SDL_INIT_EVERYTHING" << std::endl;
-		EXIT_FAILURE;
-	}
-
-	// Create window
-	_window = SDL_CreateWindow("Pokemon", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1980, 1080, SDL_WINDOW_SHOWN);
-
-	if (!_window) {
-		std::cout << "UNABLE TO CREATE WINDOW" << std::endl;
-		EXIT_FAILURE;
-	}
-
-	// Get window surface
-	_surface = SDL_GetWindowSurface(_window); 
-
-	// Fill the screen with color white
-	SDL_FillRect(_surface, NULL, SDL_MapRGB(_surface->format, 255, 255, 255));
-
-	// Update the surface
-	SDL_UpdateWindowSurface(_window);
-
-	SDL_Delay(2000);
-
-	// Render image to window
-	SDL_Surface* image = SDL_LoadBMP("assets/pokemon/sprites.1.png");
 }
 
 Game::Game() {
 
+	initializePokemon();
+	initializeAttackList();
 }
 
 Game::~Game() {
 
-	SDL_DestroyWindow(_window);
 	SDL_Quit();
 }
 
 void Game::run() {
 
-	initializePokemon();
-	initializeWindow();
+	_interface.render(NULL, NULL, "assets/pokemon/sprites/1.png");
+	_interface.update();
+
+	bool quit = false;
+	SDL_Event e;
+
+	while (!quit) {
+
+		while (SDL_PollEvent(&e) != 0) {
+
+			if (e.type == SDL_QUIT) {
+				quit = true;
+			}
+		}
+	}
 }
