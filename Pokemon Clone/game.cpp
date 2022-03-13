@@ -57,14 +57,67 @@ Game::~Game() {
 }
 
 void Game::run() {
-	SDL_Event e;
 
+	SDL_Event e;
+	menuState mState = menuState::MAIN;
 
 	while (!_quitGame) {
 
-		SDL_Rect dstRect = { _interface.WINDOW_WIDTH / 2, _interface.WINDOW_HEIGHT / 2, 80, 80 };
-		_interface.render(NULL, &dstRect, "assets/pokemon/sprites/1.png");
-		_interface.update();
+		_interface.clear();
+
+		windowWidth = _interface.WINDOW_WIDTH;
+		windowHeight = _interface.WINDOW_HEIGHT;
+
+		SDL_Rect battlefield = { 0, 0, windowWidth, windowHeight - 150 };
+		SDL_Rect menu = { 0, windowHeight - 150, windowWidth, 150 };
+		SDL_Rect playerPokemonDstRect = { windowWidth * 0.15, windowHeight - 540, 500, 400 };
+		SDL_Rect opponentPokemonDstRect = { windowWidth * 0.60, windowHeight / 4, 500, 400};
+		// TODO: Create a Button class in interface header
+		SDL_Rect fightButton = { 10, 0, 119, 45 };
+		SDL_Rect fightButtonHover = { 140, 0, 249, 45 };
+		SDL_Rect fightButtonDstRect = { windowWidth * 0.55, windowHeight - 120, 160, 90 };
+		SDL_Rect pokemonButton = { 10, 46, 119, 45 };
+		SDL_Rect pokemonButtonHover = { 140, 46, 249, 45 };
+		SDL_Rect pokemonButtonDstRect = { windowWidth * 0.65, windowHeight - 120, 160, 90 };
+		SDL_Rect bagButton = { 10, 92, 119, 45 };
+		SDL_Rect bagButtonHover = { 140, 92, 249, 45 };
+		SDL_Rect bagButtonDstRect = { windowWidth * 0.75, windowHeight - 120, 160, 90 };
+		SDL_Rect runButton = { 10, 138, 119, 45 };
+		SDL_Rect runButtonHover = { 140, 138, 249, 45 };
+		SDL_Rect runButtonDstRect = { windowWidth * 0.85, windowHeight - 120, 160, 90 };
+
+		// Render battlefield background
+		_interface.render(NULL, &battlefield, "assets/BattleUI/battleBackground.png");
+
+		// Render Pokemon
+		_interface.render(NULL, &playerPokemonDstRect, "assets/pokemon/sprites/back/6.png");
+		_interface.render(NULL, &opponentPokemonDstRect, "assets/pokemon/sprites/1.png");
+
+		// Render UI menus
+		switch (mState)
+		{
+		case menuState::MAIN:
+			_interface.render(NULL, &menu, "assets/BattleUI/battleCommand.png");
+
+			// Render Buttons
+			_interface.render(&fightButton, &fightButtonDstRect, "assets/BattleUI/battleCommandButtons.png");
+			_interface.render(&pokemonButton, &pokemonButtonDstRect, "assets/BattleUI/battleCommandButtons.png");
+			_interface.render(&bagButton, &bagButtonDstRect, "assets/BattleUI/battleCommandButtons.png");
+			_interface.render(&runButton, &runButtonDstRect, "assets/BattleUI/battleCommandButtons.png");
+			break;
+
+		case menuState::FIGHT:
+			_interface.render(NULL, &menu, "assets/BattleUI/battleFight.png");
+			break;
+		case menuState::ITEMS:
+			break;
+		case menuState::STATS:
+			break;
+		case menuState::RUN:
+			break;
+		default:
+			break;
+		}
 
 		while (SDL_PollEvent(&e) != 0) {
 
@@ -73,11 +126,51 @@ void Game::run() {
 				_quitGame = true;
 			}
 
+			//TODO create button handle events function
+			// Button event handling
+			SDL_Point mousePos;
+			SDL_GetMouseState(&mousePos.x, &mousePos.y);
+
+			if (SDL_PointInRect(&mousePos, &fightButtonDstRect)) {
+				_interface.render(&fightButtonHover, &fightButtonDstRect, "assets/BattleUI/battleCommandButtons.png");
+			}
+
+			if (SDL_PointInRect(&mousePos, &pokemonButtonDstRect)) {
+				std::cout << "Pokemon hovered" << std::endl;
+			}
+
+			if (SDL_PointInRect(&mousePos, &bagButtonDstRect)) {
+				std::cout << "Bag hovered" << std::endl;
+			}
+
+			if (SDL_PointInRect(&mousePos, &runButtonDstRect)) {
+				std::cout << "Run hovered" << std::endl;
+			}
+
+			if (e.type == SDL_MOUSEBUTTONDOWN) {
+
+				if (SDL_PointInRect(&mousePos, &fightButtonDstRect)) {
+					std::cout << "Fight pressed" << std::endl;
+					mState = menuState::FIGHT;
+				}
+
+				if (SDL_PointInRect(&mousePos, &pokemonButtonDstRect)) {
+					std::cout << "Pokemon pressed" << std::endl;
+				}
+
+				if (SDL_PointInRect(&mousePos, &bagButtonDstRect)) {
+					std::cout << "Bag pressed" << std::endl;
+				}
+
+				if (SDL_PointInRect(&mousePos, &runButtonDstRect)) {
+					std::cout << "Run pressed" << std::endl;
+				}
+			}
+
 			if (e.type = SDL_WINDOWEVENT) {
 				switch (e.window.event)
 				{
 				case SDL_WINDOWEVENT_RESIZED:
-					std::cout << "Window was resized!" << std::endl;
 					_interface.setWindowWidth(e.window.data1);
 					_interface.setWindowHeight(e.window.data2);
 					break;
@@ -86,5 +179,9 @@ void Game::run() {
 				}
 			}
 		}
+
+		// Update window
+		_interface.update();
+
 	}
 }

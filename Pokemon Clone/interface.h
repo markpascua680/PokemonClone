@@ -12,6 +12,7 @@ public:
 	~Interface();
 
 	void render(SDL_Rect* clip, SDL_Rect* dstRect, std::string image);
+	void clear();
 	void update();
 
 	void setWindowWidth(int w);

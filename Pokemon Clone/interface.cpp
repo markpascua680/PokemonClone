@@ -43,13 +43,15 @@ void Interface::render(SDL_Rect* clip, SDL_Rect* dstRect, std::string path) {
 	if (image == NULL)
 		std::cout << "UNABLE TO OPEN IMAGE" << std::endl;
 
-	// Render background first
-	_texture = SDL_CreateTextureFromSurface(_renderer, _surface);
-	SDL_RenderCopy(_renderer, _texture, NULL, NULL);
-
 	// Then render image over background
 	_texture = SDL_CreateTextureFromSurface(_renderer, image);
 	SDL_RenderCopy(_renderer, _texture, clip, dstRect);
+}
+
+// Clear Renderer
+void Interface::clear() {
+
+	SDL_RenderClear(_renderer);
 }
 
 // Updates screen

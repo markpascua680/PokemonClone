@@ -54,10 +54,21 @@ private:
 		std::string speed;
 	};
 
+	enum class menuState
+	{
+		MAIN = 0,
+		FIGHT,
+		ITEMS,
+		STATS,
+		RUN
+	};
+
 	std::map<std::string, Pokemon> _pokedex;
 
 	// Game Window
 	Interface _interface;
+	int windowWidth;
+	int windowHeight;
 };
 
 #endif
