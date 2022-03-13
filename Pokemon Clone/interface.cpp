@@ -10,7 +10,7 @@ Interface::Interface() {
 	}
 
 	// Create window
-	_window = SDL_CreateWindow("Pokemon", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1980, 1080, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
+	_window = SDL_CreateWindow("Pokemon", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
 
 	if (!_window) {
 		std::cout << "UNABLE TO CREATE WINDOW" << std::endl;
@@ -43,6 +43,10 @@ void Interface::render(SDL_Rect* clip, SDL_Rect* dstRect, std::string path) {
 	if (image == NULL)
 		std::cout << "UNABLE TO OPEN IMAGE" << std::endl;
 
+	// Render background first
+	_texture = SDL_CreateTextureFromSurface(_renderer, _surface);
+	SDL_RenderCopy(_renderer, _texture, NULL, NULL);
+
 	// Then render image over background
 	_texture = SDL_CreateTextureFromSurface(_renderer, image);
 	SDL_RenderCopy(_renderer, _texture, clip, dstRect);
@@ -54,4 +58,13 @@ void Interface::update() {
 	// Display rendered images
 	SDL_RenderPresent(_renderer);
 
+}
+
+void Interface::setWindowWidth(int w) {
+
+	this->WINDOW_WIDTH = w;
+}
+void Interface::setWindowHeight(int h) {
+	
+	this->WINDOW_HEIGHT = h;
 }

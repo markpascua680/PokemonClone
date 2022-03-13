@@ -35,6 +35,9 @@ public:
 	void run();
 
 private:
+
+	bool _quitGame = false;
+
 	// Game Data
 	struct Pokemon
 	{
@@ -53,6 +56,7 @@ private:
 
 	std::map<std::string, Pokemon> _pokedex;
 
+	// Game Window
 	Interface _interface;
 };
 

@@ -57,19 +57,33 @@ Game::~Game() {
 }
 
 void Game::run() {
-
-	_interface.render(NULL, NULL, "assets/pokemon/sprites/1.png");
-	_interface.update();
-
-	bool quit = false;
 	SDL_Event e;
 
-	while (!quit) {
+
+	while (!_quitGame) {
+
+		SDL_Rect dstRect = { _interface.WINDOW_WIDTH / 2, _interface.WINDOW_HEIGHT / 2, 80, 80 };
+		_interface.render(NULL, &dstRect, "assets/pokemon/sprites/1.png");
+		_interface.update();
 
 		while (SDL_PollEvent(&e) != 0) {
 
+			// Window event handling
 			if (e.type == SDL_QUIT) {
-				quit = true;
+				_quitGame = true;
+			}
+
+			if (e.type = SDL_WINDOWEVENT) {
+				switch (e.window.event)
+				{
+				case SDL_WINDOWEVENT_RESIZED:
+					std::cout << "Window was resized!" << std::endl;
+					_interface.setWindowWidth(e.window.data1);
+					_interface.setWindowHeight(e.window.data2);
+					break;
+				default:
+					break;
+				}
 			}
 		}
 	}
