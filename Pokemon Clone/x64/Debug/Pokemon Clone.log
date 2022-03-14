@@ -1,17 +1,2 @@
-﻿  game.cpp
-C:\Users\markp\source\repos\Projects\Pokemon Clone\game.cpp(73,49): warning C4838: conversion from 'double' to 'int' requires a narrowing conversion
-C:\Users\markp\source\repos\Projects\Pokemon Clone\game.cpp(73,49): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\markp\source\repos\Projects\Pokemon Clone\game.cpp(74,51): warning C4838: conversion from 'double' to 'int' requires a narrowing conversion
-C:\Users\markp\source\repos\Projects\Pokemon Clone\game.cpp(74,51): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\markp\source\repos\Projects\Pokemon Clone\game.cpp(78,47): warning C4838: conversion from 'double' to 'int' requires a narrowing conversion
-C:\Users\markp\source\repos\Projects\Pokemon Clone\game.cpp(78,47): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\markp\source\repos\Projects\Pokemon Clone\game.cpp(81,49): warning C4838: conversion from 'double' to 'int' requires a narrowing conversion
-C:\Users\markp\source\repos\Projects\Pokemon Clone\game.cpp(81,49): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\markp\source\repos\Projects\Pokemon Clone\game.cpp(84,45): warning C4838: conversion from 'double' to 'int' requires a narrowing conversion
-C:\Users\markp\source\repos\Projects\Pokemon Clone\game.cpp(84,45): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\markp\source\repos\Projects\Pokemon Clone\game.cpp(87,45): warning C4838: conversion from 'double' to 'int' requires a narrowing conversion
-C:\Users\markp\source\repos\Projects\Pokemon Clone\game.cpp(87,45): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\markp\source\repos\Projects\Pokemon Clone\game.cpp(152,26): error C2065: 'mousePos': undeclared identifier
-C:\Users\markp\source\repos\Projects\Pokemon Clone\game.cpp(157,26): error C2065: 'mousePos': undeclared identifier
-C:\Users\markp\source\repos\Projects\Pokemon Clone\game.cpp(161,26): error C2065: 'mousePos': undeclared identifier
-C:\Users\markp\source\repos\Projects\Pokemon Clone\game.cpp(165,26): error C2065: 'mousePos': undeclared identifier
+﻿  interface.cpp
+  Pokemon Clone.vcxproj -> C:\Users\markp\source\repos\Projects\Pokemon Clone\x64\Debug\Pokemon Clone.exe

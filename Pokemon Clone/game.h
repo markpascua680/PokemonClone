@@ -23,8 +23,9 @@
 class Game
 {
 	// Initialization
-	void initializePokemon();
-	void initializeAttackList();
+	void initPokemon();
+	void initAttackList();
+	void initButtons();
 
 	// Game States
 

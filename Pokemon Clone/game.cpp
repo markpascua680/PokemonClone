@@ -1,6 +1,6 @@
 #include "game.h"
 
-void Game::initializePokemon() { // Load the pokemon from database
+void Game::initPokemon() { // Load the pokemon from database
 
 	std::ifstream pokemonData;
 	pokemonData.open("pokemon.txt");
@@ -41,14 +41,22 @@ void Game::initializePokemon() { // Load the pokemon from database
 	pokemonData.close();
 }
 
-void Game::initializeAttackList() {
+void Game::initAttackList() {
 
+}
+
+void Game::initButtons() {
+
+	SDL_Rect fightButton = { 10, 0, 119, 45 };
+	SDL_Rect fightButtonDstRect = { windowWidth * 0.55, windowHeight - 120, 160, 90 };
+	_interface.addButton("Fight", &fightButton, &fightButtonDstRect, "assets/BattleUI/battleCommandButtons.png");
 }
 
 Game::Game() {
 
-	initializePokemon();
-	initializeAttackList();
+	initPokemon();
+	initAttackList();
+	initButtons();
 }
 
 Game::~Game() {
@@ -72,7 +80,7 @@ void Game::run() {
 		SDL_Rect menu = { 0, windowHeight - 150, windowWidth, 150 };
 		SDL_Rect playerPokemonDstRect = { windowWidth * 0.15, windowHeight - 540, 500, 400 };
 		SDL_Rect opponentPokemonDstRect = { windowWidth * 0.60, windowHeight / 4, 500, 400};
-		// TODO: Create a Button class in interface header
+
 		SDL_Rect fightButton = { 10, 0, 119, 45 };
 		SDL_Rect fightButtonHover = { 140, 0, 249, 45 };
 		SDL_Rect fightButtonDstRect = { windowWidth * 0.55, windowHeight - 120, 160, 90 };
@@ -100,7 +108,7 @@ void Game::run() {
 			_interface.render(NULL, &menu, "assets/BattleUI/battleCommand.png");
 
 			// Render Buttons
-			_interface.render(&fightButton, &fightButtonDstRect, "assets/BattleUI/battleCommandButtons.png");
+			_interface.displayButton("Fight");
 			_interface.render(&pokemonButton, &pokemonButtonDstRect, "assets/BattleUI/battleCommandButtons.png");
 			_interface.render(&bagButton, &bagButtonDstRect, "assets/BattleUI/battleCommandButtons.png");
 			_interface.render(&runButton, &runButtonDstRect, "assets/BattleUI/battleCommandButtons.png");
@@ -184,4 +192,5 @@ void Game::run() {
 		_interface.update();
 
 	}
+
 }

@@ -1,6 +1,10 @@
 #include <iostream>
 #include "interface.h"
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////	CLASS INTERFACE DEFINTIONS	////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 Interface::Interface() {
 
 	// End program if fail to initialize
@@ -69,4 +73,18 @@ void Interface::setWindowWidth(int w) {
 void Interface::setWindowHeight(int h) {
 	
 	this->WINDOW_HEIGHT = h;
+}
+
+void Interface::addButton(std::string button, SDL_Rect* srcRect, SDL_Rect* dstRect, std::string image) {
+
+	Button b = { srcRect, dstRect, image, false };
+	_buttons[button] = b;
+}
+
+void Interface::displayButton(std::string button) {
+	// TODO fix button data not saving to map
+	for (auto x : _buttons) {
+
+		std::cout << x.second._srcRect->x << ", " << x.second._srcRect->y << ", " << x.second._srcRect->w << ", " << x.second._srcRect->h << std::endl;
+	}
 }
