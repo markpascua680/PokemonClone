@@ -68,8 +68,8 @@ private:
 
 	// Game Window
 	Interface _interface;
-	int windowWidth;
-	int windowHeight;
+	int _windowWidth;
+	int _windowHeight;
 };
 
 #endif

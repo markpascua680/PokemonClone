@@ -1,2 +1,20 @@
-﻿  interface.cpp
+﻿  game.cpp
+C:\Users\markp\source\repos\Projects\Pokemon Clone\game.cpp(51,47): warning C4838: conversion from 'double' to 'int' requires a narrowing conversion
+C:\Users\markp\source\repos\Projects\Pokemon Clone\game.cpp(51,47): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\markp\source\repos\Projects\Pokemon Clone\game.cpp(84,50): warning C4838: conversion from 'double' to 'int' requires a narrowing conversion
+C:\Users\markp\source\repos\Projects\Pokemon Clone\game.cpp(84,50): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\markp\source\repos\Projects\Pokemon Clone\game.cpp(85,52): warning C4838: conversion from 'double' to 'int' requires a narrowing conversion
+C:\Users\markp\source\repos\Projects\Pokemon Clone\game.cpp(85,52): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\markp\source\repos\Projects\Pokemon Clone\game.cpp(89,48): warning C4838: conversion from 'double' to 'int' requires a narrowing conversion
+C:\Users\markp\source\repos\Projects\Pokemon Clone\game.cpp(89,48): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\markp\source\repos\Projects\Pokemon Clone\game.cpp(92,50): warning C4838: conversion from 'double' to 'int' requires a narrowing conversion
+C:\Users\markp\source\repos\Projects\Pokemon Clone\game.cpp(92,50): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\markp\source\repos\Projects\Pokemon Clone\game.cpp(95,46): warning C4838: conversion from 'double' to 'int' requires a narrowing conversion
+C:\Users\markp\source\repos\Projects\Pokemon Clone\game.cpp(95,46): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\markp\source\repos\Projects\Pokemon Clone\game.cpp(98,46): warning C4838: conversion from 'double' to 'int' requires a narrowing conversion
+C:\Users\markp\source\repos\Projects\Pokemon Clone\game.cpp(98,46): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+  interface.cpp
+  main.cpp
+  Generating Code...
+C:\Users\markp\source\repos\Projects\Pokemon Clone\interface.cpp(99): warning C4715: 'Interface::isButtonHovered': not all control paths return a value
   Pokemon Clone.vcxproj -> C:\Users\markp\source\repos\Projects\Pokemon Clone\x64\Debug\Pokemon Clone.exe

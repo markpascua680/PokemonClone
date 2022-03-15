@@ -48,11 +48,14 @@ void Game::initAttackList() {
 void Game::initButtons() {
 
 	SDL_Rect fightButton = { 10, 0, 119, 45 };
-	SDL_Rect fightButtonDstRect = { windowWidth * 0.55, windowHeight - 120, 160, 90 };
+	SDL_Rect fightButtonDstRect = { _windowWidth * 0.55, _windowHeight - 120, 160, 90 };
 	_interface.addButton("Fight", &fightButton, &fightButtonDstRect, "assets/BattleUI/battleCommandButtons.png");
 }
 
 Game::Game() {
+
+	_windowWidth = _interface.WINDOW_WIDTH;
+	_windowHeight = _interface.WINDOW_HEIGHT;
 
 	initPokemon();
 	initAttackList();
@@ -73,26 +76,26 @@ void Game::run() {
 
 		_interface.clear();
 
-		windowWidth = _interface.WINDOW_WIDTH;
-		windowHeight = _interface.WINDOW_HEIGHT;
+		_windowWidth = _interface.WINDOW_WIDTH;
+		_windowHeight = _interface.WINDOW_HEIGHT;
 
-		SDL_Rect battlefield = { 0, 0, windowWidth, windowHeight - 150 };
-		SDL_Rect menu = { 0, windowHeight - 150, windowWidth, 150 };
-		SDL_Rect playerPokemonDstRect = { windowWidth * 0.15, windowHeight - 540, 500, 400 };
-		SDL_Rect opponentPokemonDstRect = { windowWidth * 0.60, windowHeight / 4, 500, 400};
+		SDL_Rect battlefield = { 0, 0, _windowWidth, _windowHeight - 150 };
+		SDL_Rect menu = { 0, _windowHeight - 150, _windowWidth, 150 };
+		SDL_Rect playerPokemonDstRect = { _windowWidth * 0.15, _windowHeight - 540, 500, 400 };
+		SDL_Rect opponentPokemonDstRect = { _windowWidth * 0.60, _windowHeight / 4, 500, 400};
 
 		SDL_Rect fightButton = { 10, 0, 119, 45 };
 		SDL_Rect fightButtonHover = { 140, 0, 249, 45 };
-		SDL_Rect fightButtonDstRect = { windowWidth * 0.55, windowHeight - 120, 160, 90 };
+		SDL_Rect fightButtonDstRect = { _windowWidth * 0.55, _windowHeight - 120, 160, 90 };
 		SDL_Rect pokemonButton = { 10, 46, 119, 45 };
 		SDL_Rect pokemonButtonHover = { 140, 46, 249, 45 };
-		SDL_Rect pokemonButtonDstRect = { windowWidth * 0.65, windowHeight - 120, 160, 90 };
+		SDL_Rect pokemonButtonDstRect = { _windowWidth * 0.65, _windowHeight - 120, 160, 90 };
 		SDL_Rect bagButton = { 10, 92, 119, 45 };
 		SDL_Rect bagButtonHover = { 140, 92, 249, 45 };
-		SDL_Rect bagButtonDstRect = { windowWidth * 0.75, windowHeight - 120, 160, 90 };
+		SDL_Rect bagButtonDstRect = { _windowWidth * 0.75, _windowHeight - 120, 160, 90 };
 		SDL_Rect runButton = { 10, 138, 119, 45 };
 		SDL_Rect runButtonHover = { 140, 138, 249, 45 };
-		SDL_Rect runButtonDstRect = { windowWidth * 0.85, windowHeight - 120, 160, 90 };
+		SDL_Rect runButtonDstRect = { _windowWidth * 0.85, _windowHeight - 120, 160, 90 };
 
 		// Render battlefield background
 		_interface.render(NULL, &battlefield, "assets/BattleUI/battleBackground.png");
@@ -127,6 +130,27 @@ void Game::run() {
 			break;
 		}
 
+		//TODO create button handle events function
+		// Button event handling
+		SDL_Point mousePos;
+		SDL_GetMouseState(&mousePos.x, &mousePos.y);
+
+		if (SDL_PointInRect(&mousePos, &fightButtonDstRect)) {
+			_interface.render(&fightButtonHover, &fightButtonDstRect, "assets/BattleUI/battleCommandButtons.png");
+		}
+
+		if (SDL_PointInRect(&mousePos, &pokemonButtonDstRect)) {
+			std::cout << "Pokemon hovered" << std::endl;
+		}
+
+		if (SDL_PointInRect(&mousePos, &bagButtonDstRect)) {
+			std::cout << "Bag hovered" << std::endl;
+		}
+
+		if (SDL_PointInRect(&mousePos, &runButtonDstRect)) {
+			std::cout << "Run hovered" << std::endl;
+		}
+
 		while (SDL_PollEvent(&e) != 0) {
 
 			// Window event handling
@@ -134,26 +158,7 @@ void Game::run() {
 				_quitGame = true;
 			}
 
-			//TODO create button handle events function
-			// Button event handling
-			SDL_Point mousePos;
-			SDL_GetMouseState(&mousePos.x, &mousePos.y);
-
-			if (SDL_PointInRect(&mousePos, &fightButtonDstRect)) {
-				_interface.render(&fightButtonHover, &fightButtonDstRect, "assets/BattleUI/battleCommandButtons.png");
-			}
-
-			if (SDL_PointInRect(&mousePos, &pokemonButtonDstRect)) {
-				std::cout << "Pokemon hovered" << std::endl;
-			}
-
-			if (SDL_PointInRect(&mousePos, &bagButtonDstRect)) {
-				std::cout << "Bag hovered" << std::endl;
-			}
-
-			if (SDL_PointInRect(&mousePos, &runButtonDstRect)) {
-				std::cout << "Run hovered" << std::endl;
-			}
+			
 
 			if (e.type == SDL_MOUSEBUTTONDOWN) {
 

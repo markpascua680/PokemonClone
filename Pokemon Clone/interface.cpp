@@ -14,7 +14,7 @@ Interface::Interface() {
 	}
 
 	// Create window
-	_window = SDL_CreateWindow("Pokemon", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
+	_window = SDL_CreateWindow("Pokemon", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
 
 	if (!_window) {
 		std::cout << "UNABLE TO CREATE WINDOW" << std::endl;
@@ -75,16 +75,25 @@ void Interface::setWindowHeight(int h) {
 	this->WINDOW_HEIGHT = h;
 }
 
+// Add button to map _buttons
 void Interface::addButton(std::string button, SDL_Rect* srcRect, SDL_Rect* dstRect, std::string image) {
 
-	Button b = { srcRect, dstRect, image, false };
+	Button b = { *srcRect, *dstRect, image, false };
 	_buttons[button] = b;
 }
 
+// Display button to screen
 void Interface::displayButton(std::string button) {
-	// TODO fix button data not saving to map
-	for (auto x : _buttons) {
+	
+	Button b = _buttons[button];
+	render(&b._srcRect, &b._dstRect, b._image);
+}
 
-		std::cout << x.second._srcRect->x << ", " << x.second._srcRect->y << ", " << x.second._srcRect->w << ", " << x.second._srcRect->h << std::endl;
+// Returns true if mouse is hovering over button
+bool Interface::isButtonHovered(SDL_Point mousePos, std::string button) {
+
+	Button b = _buttons[button];
+	if (SDL_PointInRect(&mousePos, &b._dstRect)) {
+		return true;
 	}
 }
