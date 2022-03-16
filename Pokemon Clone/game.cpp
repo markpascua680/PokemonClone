@@ -93,6 +93,8 @@ Game::~Game() {
 
 void Game::run() {
 
+	SDL_Event e;
+
 	while (!_quitGame) {
 
 		_interface.clear();
@@ -138,26 +140,16 @@ void Game::run() {
 			break;
 		}
 
-		handleButtonEvents();
+		// Button event handling
+		handleButtonEvents(e);
 
-		while (SDL_PollEvent(&_e) != 0) {
+		while (SDL_PollEvent(&e) != 0) {
 
 			// Window event handling
-			if (_e.type == SDL_QUIT) {
+			if (e.type == SDL_QUIT) {
 				_quitGame = true;
 			}
 
-			if (_e.type = SDL_WINDOWEVENT) {
-				switch (_e.window.event)
-				{
-				case SDL_WINDOWEVENT_RESIZED:
-					_interface.setWindowWidth(_e.window.data1);
-					_interface.setWindowHeight(_e.window.data2);
-					break;
-				default:
-					break;
-				}
-			}
 		}
 
 		// Update window
@@ -168,45 +160,64 @@ void Game::run() {
 }
 
 // Button event handling
-void Game::handleButtonEvents() {
+void Game::handleButtonEvents(SDL_Event& e) {
 
 	SDL_Point mousePos;
 	SDL_GetMouseState(&mousePos.x, &mousePos.y);
 
-	if (_interface.isButtonHovered(mousePos, "Fight")) {
-		_interface.displayButton("Fight Hovered");
-	}
-
-	if (_interface.isButtonHovered(mousePos, "Pokemon")) {
-		_interface.displayButton("Pokemon Hovered");
-	}
-
-	if (_interface.isButtonHovered(mousePos, "Bag")) {
-		_interface.displayButton("Bag Hovered");
-	}
-
-	if (_interface.isButtonHovered(mousePos, "Run")) {
-		_interface.displayButton("Run Hovered");
-	}
-
-	// Mouse click events
-	if (_e.type == SDL_MOUSEBUTTONDOWN) {
-
+	switch (_menuState)
+	{
+	case Game::menuState::MAIN:
 		if (_interface.isButtonHovered(mousePos, "Fight")) {
-			std::cout << "Fight pressed" << std::endl;
-			_menuState = menuState::FIGHT;
+			_interface.displayButton("Fight Hovered");
 		}
 
 		if (_interface.isButtonHovered(mousePos, "Pokemon")) {
-			std::cout << "Pokemon pressed" << std::endl;
+			_interface.displayButton("Pokemon Hovered");
 		}
 
 		if (_interface.isButtonHovered(mousePos, "Bag")) {
-			std::cout << "Bag pressed" << std::endl;
+			_interface.displayButton("Bag Hovered");
 		}
 
 		if (_interface.isButtonHovered(mousePos, "Run")) {
-			std::cout << "Run pressed" << std::endl;
+			_interface.displayButton("Run Hovered");
 		}
-	}
+
+		// Mouse click events
+		if (e.type == SDL_MOUSEBUTTONDOWN) {
+
+			if (_interface.isButtonHovered(mousePos, "Fight")) {
+				std::cout << "Hello" << std::endl;
+				_menuState = menuState::FIGHT;
+			}
+
+			if (_interface.isButtonHovered(mousePos, "Pokemon")) {
+			}
+
+			if (_interface.isButtonHovered(mousePos, "Bag")) {
+			}
+
+			if (_interface.isButtonHovered(mousePos, "Run")) {
+			}
+		}
+		break;
+	case Game::menuState::FIGHT:
+
+		// Keyboard events
+		if (e.type == SDL_KEYDOWN) {
+
+			if (e.key.keysym.sym == SDLK_ESCAPE)
+				_menuState = menuState::MAIN;
+		}
+		break;
+	case Game::menuState::ITEMS:
+		break;
+	case Game::menuState::STATS:
+		break;
+	case Game::menuState::RUN:
+		break;
+	default:
+		break;
+	}	
 }

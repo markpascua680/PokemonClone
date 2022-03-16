@@ -35,15 +35,13 @@ public:
 	~Game();
 
 	void run();
-	void handleButtonEvents();
+	void handleButtonEvents(SDL_Event& e);
 
 private:
 
 	bool _quitGame = false;
 
 	// Game Data
-	SDL_Event _e;
-
 	struct Pokemon
 	{
 		std::string id;
