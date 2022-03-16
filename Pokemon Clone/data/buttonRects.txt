@@ -1,0 +1,4 @@
+Fight assets/BattleUI/battleCommandButtons.png 10 0 119 45 140 0 249 45 1056 960 160 90
+Pokemon assets/BattleUI/battleCommandButtons.png 10 46 119 45 140 46 249 45 1248 960 160 90
+Bag assets/BattleUI/battleCommandButtons.png 10 92 119 45 140 92 249 45 1440 960 160 90
+Run assets/BattleUI/battleCommandButtons.png 10 138 119 45 140 138 249 45 1632 960 160 90

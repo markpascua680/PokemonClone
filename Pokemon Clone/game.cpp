@@ -1,9 +1,9 @@
 #include "game.h"
-
+// TODO: Fix pokemon.txt file to correctly read data; NULL absent values
 void Game::initPokemon() { // Load the pokemon from database
 
 	std::ifstream pokemonData;
-	pokemonData.open("pokemon.txt");
+	pokemonData.open("data/pokemon.txt");
 
 	// Check if file can be opened
 	if (!pokemonData.is_open()) {
@@ -11,7 +11,9 @@ void Game::initPokemon() { // Load the pokemon from database
 		EXIT_FAILURE;
 	}
 
-	std::string id, name, type1, type2, maxHp, hp, atk, def, spAtk, spDef, speed;
+	// Reads data from file in this order
+	std::string id, name, type1, type2;
+	int maxHp, hp, atk, def, spAtk, spDef, speed;
 
 	std::string value; // Read each value
 
@@ -36,6 +38,7 @@ void Game::initPokemon() { // Load the pokemon from database
 		Pokemon p = { id, name, type1, type2, maxHp, hp, atk, def, spAtk, spDef, speed };
 
 		_pokedex[name] = p;
+
 	}
 
 	pokemonData.close();
@@ -47,31 +50,62 @@ void Game::initAttackList() {
 
 void Game::initButtons() {
 
-	// TODO: Move rectangle data to txt file and init data by reading from file
-	SDL_Rect fightButton = { 10, 0, 119, 45 };
-	SDL_Rect fightButtonHover = { 140, 0, 249, 45 };
-	SDL_Rect fightButtonDstRect = { _windowWidth * 0.55, _windowHeight - 120, 160, 90 };
+	std::ifstream buttonData;
+	buttonData.open("data/buttonRects.txt");
 
-	SDL_Rect pokemonButton = { 10, 46, 119, 45 };
-	SDL_Rect pokemonButtonHover = { 140, 46, 249, 45 };
-	SDL_Rect pokemonButtonDstRect = { _windowWidth * 0.65, _windowHeight - 120, 160, 90 };
+	// Check if file can be opened
+	if (!buttonData.is_open()) {
+		std::cout << "UNABLE TO OPEN FILE" << std::endl;
+		EXIT_FAILURE;
+	}
 
-	SDL_Rect bagButton = { 10, 92, 119, 45 };
-	SDL_Rect bagButtonHover = { 140, 92, 249, 45 };
-	SDL_Rect bagButtonDstRect = { _windowWidth * 0.75, _windowHeight - 120, 160, 90 };
+	// Rectangle's name image source
+	std::string name, image;
 
-	SDL_Rect runButton = { 10, 138, 119, 45 };
-	SDL_Rect runButtonHover = { 140, 138, 249, 45 };
-	SDL_Rect runButtonDstRect = { _windowWidth * 0.85, _windowHeight - 120, 160, 90 };
+	// Rectangle's x, y coordinates and their width, height
+	int x, y, w, h;
 
-	_interface.addButton("Fight", &fightButton, &fightButtonDstRect, "assets/BattleUI/battleCommandButtons.png");
-	_interface.addButton("Fight Hovered", &fightButtonHover, &fightButtonDstRect, "assets/BattleUI/battleCommandButtons.png");
-	_interface.addButton("Pokemon", &pokemonButton, &pokemonButtonDstRect, "assets/BattleUI/battleCommandButtons.png");
-	_interface.addButton("Pokemon Hovered", &pokemonButtonHover, &pokemonButtonDstRect, "assets/BattleUI/battleCommandButtons.png");
-	_interface.addButton("Bag", &bagButton, &bagButtonDstRect, "assets/BattleUI/battleCommandButtons.png");
-	_interface.addButton("Bag Hovered", &bagButtonHover, &bagButtonDstRect, "assets/BattleUI/battleCommandButtons.png");
-	_interface.addButton("Run", &runButton, &runButtonDstRect, "assets/BattleUI/battleCommandButtons.png");
-	_interface.addButton("Run Hovered", &runButtonHover, &runButtonDstRect, "assets/BattleUI/battleCommandButtons.png");
+	// Store these coordinates into source, hovered, and destination rectangles
+	SDL_Rect src, hover, dst;
+
+	// Used to read each value
+	std::string value; 
+
+	while (std::getline(buttonData, value)) {
+
+		std::istringstream iss(value);
+
+		iss >> name;
+		iss >> image;
+
+		// The next 4 coordinates are the source's rectangle, the 4 after are the hover's rectangle, last 4 are the destination rectangle
+		for (int i = 0; i < 3; i++) {
+
+			iss >> x;
+			iss >> y;
+			iss >> w;
+			iss >> h;
+
+			switch (i)
+			{
+			case 0:
+				src = { x,y,w,h };
+				break;
+			case 1:
+				hover = { x,y,w,h };
+				break;
+			case 2:
+				dst = { x,y,w,h };
+				break;
+			default:
+				break;
+			}
+		}
+
+		_interface.addButton(name, &src, &hover, &dst, image);
+	}
+
+	buttonData.close();
 }
 
 Game::Game() {
@@ -162,33 +196,16 @@ void Game::run() {
 // Button event handling
 void Game::handleButtonEvents(SDL_Event& e) {
 
-	SDL_Point mousePos;
-	SDL_GetMouseState(&mousePos.x, &mousePos.y);
+	SDL_Point mousePos = _interface.mousePos;
 
 	switch (_menuState)
 	{
 	case Game::menuState::MAIN:
-		if (_interface.isButtonHovered(mousePos, "Fight")) {
-			_interface.displayButton("Fight Hovered");
-		}
-
-		if (_interface.isButtonHovered(mousePos, "Pokemon")) {
-			_interface.displayButton("Pokemon Hovered");
-		}
-
-		if (_interface.isButtonHovered(mousePos, "Bag")) {
-			_interface.displayButton("Bag Hovered");
-		}
-
-		if (_interface.isButtonHovered(mousePos, "Run")) {
-			_interface.displayButton("Run Hovered");
-		}
 
 		// Mouse click events
 		if (e.type == SDL_MOUSEBUTTONDOWN) {
 
 			if (_interface.isButtonHovered(mousePos, "Fight")) {
-				std::cout << "Hello" << std::endl;
 				_menuState = menuState::FIGHT;
 			}
 

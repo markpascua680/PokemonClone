@@ -5,9 +5,10 @@
 class Interface
 {
 public:
-	// Window Dimensions
+	// Window
 	int WINDOW_WIDTH = 1920;
 	int WINDOW_HEIGHT = 1080;
+	SDL_Point mousePos;
 
 	Interface();
 	~Interface();
@@ -19,7 +20,7 @@ public:
 	void setWindowWidth(int w);
 	void setWindowHeight(int h);
 
-	void addButton(std::string button, SDL_Rect* srcRect, SDL_Rect* dstRect, std::string image);
+	void addButton(std::string button, SDL_Rect* srcRect, SDL_Rect* _hoverRect, SDL_Rect* dstRect, std::string image);
 	void displayButton(std::string button);
 	bool isButtonHovered(SDL_Point mousePos, std::string button);
 
@@ -36,6 +37,8 @@ private:
 		// CLip of the source image to be made into a button
 		SDL_Rect _srcRect;
 
+		// Appearance of the images while mouse hovers over it
+		SDL_Rect _hoverRect;
 		// Destination that button will be drawn on screen
 		SDL_Rect _dstRect;
 

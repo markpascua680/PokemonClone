@@ -80,18 +80,25 @@ void Interface::setWindowHeight(int h) {
 	this->WINDOW_HEIGHT = h;
 }
 
-// Add button to map _buttons
-void Interface::addButton(std::string button, SDL_Rect* srcRect, SDL_Rect* dstRect, std::string image) {
+// Saves a button's original image, image when it's hovered and the screen destination that it will be displayed at
+void Interface::addButton(std::string button, SDL_Rect* srcRect, SDL_Rect* _hoverRect, SDL_Rect* dstRect, std::string image) {
 
-	Button b = { *srcRect, *dstRect, image};
+	Button b = { *srcRect, *_hoverRect, *dstRect,  image};
 	_buttons[button] = b;
 }
 
-// Display button to screen
+// Takes the name of the button
 void Interface::displayButton(std::string button) {
 	
 	Button b = _buttons[button];
-	render(&b._srcRect, &b._dstRect, b._image);
+
+	SDL_GetMouseState(&mousePos.x, &mousePos.y);
+
+	// Display the button's hover image if mouse is over it, display original image if not
+	if (isButtonHovered(mousePos, button))
+		render(&b._hoverRect, &b._dstRect, b._image);
+	else
+		render(&b._srcRect, &b._dstRect, b._image);
 }
 
 // Returns true if mouse is hovering over button

@@ -48,13 +48,13 @@ private:
 		std::string name;
 		std::string type1;
 		std::string type2;
-		std::string maxHp;
-		std::string hp;
-		std::string atk;
-		std::string def;
-		std::string spAtk;
-		std::string spDef;
-		std::string speed;
+		int maxHp;
+		int hp;
+		int atk;
+		int def;
+		int spAtk;
+		int spDef;
+		int speed;
 	};
 
 	enum class menuState
