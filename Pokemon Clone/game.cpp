@@ -1,4 +1,5 @@
 #include "game.h"
+// TODO: Find attack stats data
 // TODO: Fix pokemon.txt file to correctly read data; NULL absent values
 void Game::initPokemon() { // Load the pokemon from database
 
@@ -46,6 +47,47 @@ void Game::initPokemon() { // Load the pokemon from database
 
 void Game::initAttackList() {
 
+}
+
+void Game::initImages() {
+
+	std::ifstream imageData;
+	imageData.open("data/imageRects.txt");
+
+	// Check if file can be opened
+	if (!imageData.is_open()) {
+		std::cout << "UNABLE TO OPEN FILE" << std::endl;
+		EXIT_FAILURE;
+	}
+
+	// Image name and filepath
+	std::string name, filePath;
+
+	// Image rectangle x, y coordinates and width, height
+	int x, y, w, h;
+
+	// Store these coordinates into a rectangle
+	SDL_Rect image;
+
+	std::string value; // Read each value
+
+	while (std::getline(imageData, value)) {
+
+		std::istringstream iss(value);
+
+		iss >> name;
+		iss >> filePath;
+		iss >> x;
+		iss >> y;
+		iss >> w;
+		iss >> h;
+
+		image = { x,y,w,h };
+
+		_interface.addImage(name, &image, filePath);
+	}
+
+	imageData.close();
 }
 
 void Game::initButtons() {
@@ -117,6 +159,7 @@ Game::Game() {
 
 	initPokemon();
 	initAttackList();
+	initImages();
 	initButtons();
 }
 
@@ -136,23 +179,18 @@ void Game::run() {
 		_windowWidth = _interface.WINDOW_WIDTH;
 		_windowHeight = _interface.WINDOW_HEIGHT;
 
-		SDL_Rect battlefield = { 0, 0, _windowWidth, _windowHeight - 150 };
-		SDL_Rect menu = { 0, _windowHeight - 150, _windowWidth, 150 };
-		SDL_Rect playerPokemonDstRect = { _windowWidth * 0.15, _windowHeight - 540, 500, 400 };
-		SDL_Rect opponentPokemonDstRect = { _windowWidth * 0.60, _windowHeight / 4, 500, 400};
-
 		// Render battlefield background
-		_interface.render(NULL, &battlefield, "assets/BattleUI/battleBackground.png");
+		_interface.displayImage("Battlefield");
 
 		// Render Pokemon
-		_interface.render(NULL, &playerPokemonDstRect, "assets/pokemon/sprites/back/6.png");
-		_interface.render(NULL, &opponentPokemonDstRect, "assets/pokemon/sprites/1.png");
+		_interface.displayImage("PlayerPokemon");
+		_interface.displayImage("OpponentPokemon");
 
 		// Render UI menus
 		switch (_menuState)
 		{
 		case menuState::MAIN:
-			_interface.render(NULL, &menu, "assets/BattleUI/battleCommand.png");
+			_interface.displayImage("Menu");
 
 			// Render Buttons
 			_interface.displayButton("Fight");
@@ -162,7 +200,7 @@ void Game::run() {
 			break;
 
 		case menuState::FIGHT:
-			_interface.render(NULL, &menu, "assets/BattleUI/battleFight.png");
+			_interface.displayImage("FightMenu");
 			break;
 		case menuState::ITEMS:
 			break;

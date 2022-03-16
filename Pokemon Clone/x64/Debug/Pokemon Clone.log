@@ -1,6 +1,2 @@
 ﻿  game.cpp
-C:\Users\markp\source\repos\Projects\Pokemon Clone\game.cpp(141,50): warning C4838: conversion from 'double' to 'int' requires a narrowing conversion
-C:\Users\markp\source\repos\Projects\Pokemon Clone\game.cpp(141,50): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\markp\source\repos\Projects\Pokemon Clone\game.cpp(142,52): warning C4838: conversion from 'double' to 'int' requires a narrowing conversion
-C:\Users\markp\source\repos\Projects\Pokemon Clone\game.cpp(142,52): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
   Pokemon Clone.vcxproj -> C:\Users\markp\source\repos\Projects\Pokemon Clone\x64\Debug\Pokemon Clone.exe

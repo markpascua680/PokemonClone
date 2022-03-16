@@ -20,9 +20,12 @@ public:
 	void setWindowWidth(int w);
 	void setWindowHeight(int h);
 
-	void addButton(std::string button, SDL_Rect* srcRect, SDL_Rect* _hoverRect, SDL_Rect* dstRect, std::string image);
+	void addButton(std::string button, SDL_Rect* srcRect, SDL_Rect* _hoverRect, SDL_Rect* dstRect, std::string filePath);
 	void displayButton(std::string button);
 	bool isButtonHovered(SDL_Point mousePos, std::string button);
+
+	void addImage(std::string name, SDL_Rect* rect, std::string filePath);
+	void displayImage(std::string name);
 
 private:
 
@@ -34,18 +37,31 @@ private:
 
 	struct Button
 	{
-		// CLip of the source image to be made into a button
+		// Clip of the source image to be made into a button
 		SDL_Rect _srcRect;
 
 		// Appearance of the images while mouse hovers over it
 		SDL_Rect _hoverRect;
+
 		// Destination that button will be drawn on screen
 		SDL_Rect _dstRect;
 
-		// Image that button is from
-		std::string _image;
+		// Image filepath that button is from
+		std::string _filePath;
 	};
 
 	// Holds buttons with key = button name
 	std::map<std::string, Button> _buttons; 
+
+	struct Image
+	{
+		// Image filepath
+		std::string _filepath;
+
+		// Clip of the source image
+		SDL_Rect _rect;
+	};
+
+	// Holds images with key = image name
+	std::map<std::string , Image> _images;
 };

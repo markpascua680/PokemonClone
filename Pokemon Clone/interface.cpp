@@ -81,9 +81,9 @@ void Interface::setWindowHeight(int h) {
 }
 
 // Saves a button's original image, image when it's hovered and the screen destination that it will be displayed at
-void Interface::addButton(std::string button, SDL_Rect* srcRect, SDL_Rect* _hoverRect, SDL_Rect* dstRect, std::string image) {
+void Interface::addButton(std::string button, SDL_Rect* srcRect, SDL_Rect* _hoverRect, SDL_Rect* dstRect, std::string filePath) {
 
-	Button b = { *srcRect, *_hoverRect, *dstRect,  image};
+	Button b = { *srcRect, *_hoverRect, *dstRect,  filePath };
 	_buttons[button] = b;
 }
 
@@ -96,9 +96,9 @@ void Interface::displayButton(std::string button) {
 
 	// Display the button's hover image if mouse is over it, display original image if not
 	if (isButtonHovered(mousePos, button))
-		render(&b._hoverRect, &b._dstRect, b._image);
+		render(&b._hoverRect, &b._dstRect, b._filePath);
 	else
-		render(&b._srcRect, &b._dstRect, b._image);
+		render(&b._srcRect, &b._dstRect, b._filePath);
 }
 
 // Returns true if mouse is hovering over button
@@ -110,4 +110,17 @@ bool Interface::isButtonHovered(SDL_Point mousePos, std::string button) {
 	}
 
 	return false;
+}
+
+// Saves the image's file path and rectangle
+void Interface::addImage(std::string name, SDL_Rect* rect, std::string filePath) {
+
+	Image i = { filePath, *rect };
+	_images[name] = i;
+}
+
+void Interface::displayImage(std::string name) {
+
+	Image i = _images[name];
+	render(NULL, &i._rect, i._filepath);
 }
