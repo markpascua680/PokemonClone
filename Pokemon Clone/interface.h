@@ -41,8 +41,6 @@ private:
 
 		// Image that button is from
 		std::string _image;
-
-		bool _isHovered;
 	};
 
 	// Holds buttons with key = button name

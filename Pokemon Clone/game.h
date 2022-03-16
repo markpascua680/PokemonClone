@@ -33,13 +33,17 @@ class Game
 public:
 	Game();
 	~Game();
+
 	void run();
+	void handleButtonEvents();
 
 private:
 
 	bool _quitGame = false;
 
 	// Game Data
+	SDL_Event _e;
+
 	struct Pokemon
 	{
 		std::string id;
@@ -63,6 +67,8 @@ private:
 		STATS,
 		RUN
 	};
+
+	menuState _menuState;
 
 	std::map<std::string, Pokemon> _pokedex;
 

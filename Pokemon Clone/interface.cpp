@@ -78,7 +78,7 @@ void Interface::setWindowHeight(int h) {
 // Add button to map _buttons
 void Interface::addButton(std::string button, SDL_Rect* srcRect, SDL_Rect* dstRect, std::string image) {
 
-	Button b = { *srcRect, *dstRect, image, false };
+	Button b = { *srcRect, *dstRect, image};
 	_buttons[button] = b;
 }
 
@@ -96,4 +96,6 @@ bool Interface::isButtonHovered(SDL_Point mousePos, std::string button) {
 	if (SDL_PointInRect(&mousePos, &b._dstRect)) {
 		return true;
 	}
+
+	return false;
 }
