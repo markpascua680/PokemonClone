@@ -33,6 +33,8 @@ Interface::Interface() {
 	// Fill the screen with color white
 	_texture = SDL_CreateTextureFromSurface(_renderer, _surface);
 	SDL_RenderCopy(_renderer, _texture, NULL, NULL);
+
+	SDL_FreeSurface(_surface);
 }
 
 Interface::~Interface() {
@@ -50,6 +52,9 @@ void Interface::render(SDL_Rect* clip, SDL_Rect* dstRect, std::string path) {
 	// Then render image over background
 	_texture = SDL_CreateTextureFromSurface(_renderer, image);
 	SDL_RenderCopy(_renderer, _texture, clip, dstRect);
+
+	SDL_DestroyTexture(_texture);
+	SDL_FreeSurface(image);
 }
 
 // Clear Renderer
