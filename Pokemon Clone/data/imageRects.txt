@@ -1,5 +1,7 @@
 Battlefield assets/BattleUI/battleBackground.png 0 0 1920 930
 Menu assets/BattleUI/battleCommand.png 0 930 1920 150
 PlayerPokemon assets/pokemon/sprites/back/6.png 288 540 500 400
+PlayerPokemonBox assets/battleUI/battleFoeBoxD.png 900 600 976 343
 OpponentPokemon assets/pokemon/sprites/1.png 1152 270 500 400
+OpponentPokemonBox assets/battleUI/battleFoeBoxS.png -100 100 976 343
 FightMenu assets/BattleUI/battleFight.png 0 930 1920 150

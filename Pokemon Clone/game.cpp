@@ -63,7 +63,7 @@ void Game::initImages() {
 	// Image name and filepath
 	std::string name, filePath;
 
-	// Image rectangle x, y coordinates and width, height
+	// Image rectangle x, y destination coordinates and width, height
 	int x, y, w, h;
 
 	// Store these coordinates into a rectangle
@@ -185,6 +185,10 @@ void Game::run() {
 		// Render Pokemon
 		_interface.displayImage("PlayerPokemon");
 		_interface.displayImage("OpponentPokemon");
+
+		// Render Pokemon HP Boxes
+		_interface.displayImage("PlayerPokemonBox");
+		_interface.displayImage("OpponentPokemonBox");
 
 		// Render UI menus
 		switch (_menuState)
