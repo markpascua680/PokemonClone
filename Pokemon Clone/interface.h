@@ -56,6 +56,8 @@ public:
 	void addImage(std::string name, SDL_Rect* rect, std::string filePath);
 	void displayImage(std::string name);
 
+	void displayText(SDL_Rect* dstRect);											 // TODO: Display text to screen
+
 	// Holds images with key = image name
 	std::map<std::string, Image> images;
 

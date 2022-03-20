@@ -54,11 +54,11 @@
 			return _name;
 		}
 
-		std::string getElementType() {
+		std::string getElementType() {	// FIre, water, grass, etc.
 			return _elementType;
 		}
 
-		std::string getDamageType() {
+		std::string getDamageType() {	// Physical/special damage or status effects
 			return _damageType;
 		}
 
