@@ -27,6 +27,18 @@ public:
 	void addImage(std::string name, SDL_Rect* rect, std::string filePath);
 	void displayImage(std::string name);
 
+	struct Image
+	{
+		// Image filepath
+		std::string filepath;
+
+		// Clip of the source image
+		SDL_Rect rect;		
+	};
+
+	// Holds images with key = image name
+	std::map<std::string , Image> images;
+
 private:
 
 	// Game UI
@@ -53,15 +65,4 @@ private:
 	// Holds buttons with key = button name
 	std::map<std::string, Button> _buttons; 
 
-	struct Image
-	{
-		// Image filepath
-		std::string _filepath;
-
-		// Clip of the source image
-		SDL_Rect _rect;
-	};
-
-	// Holds images with key = image name
-	std::map<std::string , Image> _images;
 };

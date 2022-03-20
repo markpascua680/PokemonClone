@@ -33,4 +33,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="data\buttonRects.txt" />
+    <Text Include="data\imageRects.txt" />
+    <Text Include="data\pokemon.txt" />
+  </ItemGroup>
 </Project>

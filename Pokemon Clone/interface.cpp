@@ -2,7 +2,7 @@
 #include "interface.h"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////	CLASS INTERFACE DEFINTIONS	////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////	CLASS INTERFACE DEFINITIONS	////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Interface::Interface() {
@@ -42,7 +42,7 @@ Interface::~Interface() {
 	SDL_DestroyWindow(_window);
 }
 
-// Takes in images to render
+// Takes rect of image, rect of destination on screen, and image file path
 void Interface::render(SDL_Rect* clip, SDL_Rect* dstRect, std::string path) {
 
 	SDL_Surface* image = IMG_Load(path.c_str());
@@ -116,11 +116,11 @@ bool Interface::isButtonHovered(SDL_Point mousePos, std::string button) {
 void Interface::addImage(std::string name, SDL_Rect* rect, std::string filePath) {
 
 	Image i = { filePath, *rect };
-	_images[name] = i;
+	images[name] = i;
 }
 
 void Interface::displayImage(std::string name) {
 
-	Image i = _images[name];
-	render(NULL, &i._rect, i._filepath);
+	Image i = images[name];
+	render(NULL, &i.rect, i.filepath);
 }

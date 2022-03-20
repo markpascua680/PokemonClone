@@ -150,6 +150,11 @@
     <ClInclude Include="game.h" />
     <ClInclude Include="interface.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="data\buttonRects.txt" />
+    <Text Include="data\imageRects.txt" />
+    <Text Include="data\pokemon.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

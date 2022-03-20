@@ -38,8 +38,7 @@ void Game::initPokemon() { // Load the pokemon from database
 
 		Pokemon p = { id, name, type1, type2, maxHp, hp, atk, def, spAtk, spDef, speed };
 
-		_pokedex[name] = p;
-
+		_pokemonList[name] = p;
 	}
 
 	pokemonData.close();
@@ -47,6 +46,44 @@ void Game::initPokemon() { // Load the pokemon from database
 
 void Game::initAttackList() {
 
+	std::ifstream attackData;
+	attackData.open("data/attacks.txt");
+
+	// Check if file can be opened
+	if (!attackData.is_open()) {
+		std::cout << "UNABLE TO OPEN FILE" << std::endl;
+		EXIT_FAILURE;
+	}
+
+	// Reads data from file in this order
+	std::string name, elementType, damageType;
+	int power, accuracy, pp;
+
+	std::string value; // Read each value
+
+	std::getline(attackData, value); // Skip past first line of file
+
+	while (std::getline(attackData, value)) {
+
+		std::istringstream iss(value);
+
+		iss >> name;
+		if (name == "//")	// Skip to next line if the line is a comment
+			continue;
+
+		iss >> elementType;
+		iss >> damageType;
+		iss >> power;
+		iss >> accuracy;
+		iss >> pp;
+
+		Attack a = { name,elementType,damageType,power,accuracy,pp };
+
+		_attackList[name] = a;
+
+	}
+
+	attackData.close();
 }
 
 void Game::initImages() {
@@ -70,6 +107,8 @@ void Game::initImages() {
 	SDL_Rect image;
 
 	std::string value; // Read each value
+
+	std::getline(imageData, value); // Skip past first line of file
 
 	while (std::getline(imageData, value)) {
 
@@ -113,6 +152,8 @@ void Game::initButtons() {
 	// Used to read each value
 	std::string value; 
 
+	std::getline(buttonData, value); // Skip past first line of file
+
 	while (std::getline(buttonData, value)) {
 
 		std::istringstream iss(value);
@@ -150,6 +191,15 @@ void Game::initButtons() {
 	buttonData.close();
 }
 
+void Game::displayPokemon(std::string id) {
+
+	std::string filepath = "assets/pokemon/sprites/back/" + id + ".png";
+
+	SDL_Rect pokemon = { _playerX,_playerY,_playerW,_playerH };
+
+	_interface.render(NULL, &pokemon, filepath);
+}
+
 Game::Game() {
 
 	_windowWidth = _interface.WINDOW_WIDTH;
@@ -161,6 +211,18 @@ Game::Game() {
 	initAttackList();
 	initImages();
 	initButtons();
+
+	_playerPokemon = _pokemonList["Infernape"];
+	_playerPokemon.setAttack(_attackList["Scratch"], 0);
+	_playerPokemon.setAttack(_attackList["FireFang"], 1);
+	_playerPokemon.setAttack(_attackList["Ember"], 2);
+	_playerPokemon.setAttack(_attackList["DefenseCurl"], 3);
+
+	_opponentPokemon = _pokemonList["Venasaur"];
+	_opponentPokemon.setAttack(_attackList["Tackle"], 0);
+	_opponentPokemon.setAttack(_attackList["Growth"], 1);
+	_opponentPokemon.setAttack(_attackList["VineWhip"], 2);
+	_opponentPokemon.setAttack(_attackList["RazorLeaf"], 3);
 }
 
 Game::~Game() {
@@ -183,7 +245,7 @@ void Game::run() {
 		_interface.displayImage("Battlefield");
 
 		// Render Pokemon
-		_interface.displayImage("PlayerPokemon");
+		displayPokemon(_playerPokemon.id);
 		_interface.displayImage("OpponentPokemon");
 
 		// Render Pokemon HP Boxes
@@ -206,9 +268,11 @@ void Game::run() {
 		case menuState::FIGHT:
 			_interface.displayImage("FightMenu");
 			break;
-		case menuState::ITEMS:
+		case menuState::POKEMON:
 			break;
 		case menuState::STATS:
+			break;
+		case menuState::BAG:
 			break;
 		case menuState::RUN:
 			break;
@@ -270,9 +334,11 @@ void Game::handleButtonEvents(SDL_Event& e) {
 				_menuState = menuState::MAIN;
 		}
 		break;
-	case Game::menuState::ITEMS:
+	case Game::menuState::POKEMON:
 		break;
 	case Game::menuState::STATS:
+		break;
+	case Game::menuState::BAG:
 		break;
 	case Game::menuState::RUN:
 		break;

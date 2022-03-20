@@ -1,0 +1,21 @@
+Name			ElementType         DamageType      Power       Accuracy    PP
+QuickAttack		Normal			    Physical		40		    100		    30
+Tackle			Normal			    Physical		40			100			35
+Scratch			Normal				Physical		40			100			35
+VineWhip		Grass				Physical		45			100			25
+RazorLeaf		Grass				Physical		55			95			25
+FireFang		Fire				Physical		65			95			15
+ElectroBall		Electric			Physical		65			100			20
+Rollout			Rock				Physical		30			90			20
+
+Ember			Fire				Special			40			100			25
+WaterGun		Water				Special			40			100			25
+WaterPulse		Water				Special			60			100			20
+ThunderShock	Electric			Special			40			100			30
+
+Growth			Normal				Status			0			100			40
+DefenseCurl		Normal				Status			0			100			40
+
+Smokescreen		Normal				Status			0			100			20
+TailWhip		Normal				Status			0			100			30
+PlayNice		Normal				Status			0			10			20
