@@ -25,15 +25,15 @@ ID	Name		Type1		Type2		Max Possible HP		Base HP		Attack		Defense		Sp. Atk		Sp. D
 410 Shieldon	Rock		Steel		350					30			42			118			42			88			30
 411 Bastiodon	Rock		Steel		495					60			52			168			47			138			30
 412 Burmy		Bug			NULL		224					40			29			45			29			45			36
-413 Wormadam	Plant Cloak Bug Grass 424 60 59 85 79 105 36
-413 Wormadam	Sandy Cloak Bug Ground 424 60 79 105 59 85 36
-413 Wormadam	Trash Cloak Bug Steel 424 60 69 95 69 95 36
-414 Mothim Bug	Flying 424 70 94 50 94 50 66
-415 Combee Bug	Flying 244 30 30 42 30 42 70
-416 Vespiquen	Bug Flying 474 70 80 102 80 102 40
-417 Pachirisu	Electric 405 60 45 70 45 90 95
-418 Buizel		Water 330 55 65 35 60 30 85
-419 Floatzel	Water 495 85 105 55 85 50 115
+413 Wormadam	Bug			Grass		424					60			59			85			79			105			36
+413 Wormadam	Bug			Ground		424					60			79			105			59			85			36
+413 Wormadam	Bug			Steel		424					60			69			95			69			95			36
+414 Mothim		Bug			Flying		424					70			94			50			94			50			66
+415 Combee		Bug			Flying		244					30			30			42			30			42			70
+416 Vespiquen	Bug			Flying		474					70			80			102			80			102			40
+417 Pachirisu	Electric	NULL		405					60			45			70			45			90			95
+418 Buizel		Water		NULL		330					55			65			35			60			30			85
+419 Floatzel	Water		NULL		495					85			105			55			85			50			115
 420 Cherubi		Grass 275 45 35 45 62 53 35
 421 Cherrim		Grass 450 70 60 70 87 78 85
 422 Shellos		Water 325 76 48 48 57 62 34

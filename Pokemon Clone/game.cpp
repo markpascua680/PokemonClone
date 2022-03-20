@@ -68,9 +68,6 @@ void Game::initAttackList() {
 		std::istringstream iss(value);
 
 		iss >> name;
-		if (name == "//")	// Skip to next line if the line is a comment
-			continue;
-
 		iss >> elementType;
 		iss >> damageType;
 		iss >> power;
@@ -193,9 +190,33 @@ void Game::initButtons() {
 
 void Game::displayPokemon(std::string id) {
 
-	std::string filepath = "assets/pokemon/sprites/back/" + id + ".png";
+	std::string filepath;
+	SDL_Rect pokemon;
 
-	SDL_Rect pokemon = { _playerX,_playerY,_playerW,_playerH };
+	// Display both pokemon at the same time if they are the same
+	if (_playerPokemon.id == id && _opponentPokemon.id == id) {
+		
+		filepath = "assets/pokemon/sprites/" + id + ".png";
+		pokemon = _opponentPokemonRect;
+
+		_interface.render(NULL, &pokemon, filepath);
+
+		filepath = "assets/pokemon/sprites/back/" + id + ".png";
+		pokemon = _playerPokemonRect;
+	}
+	// Else if it's the player's pokemon, display the back of sprite
+	else if (_playerPokemon.id == id) {
+
+		filepath = "assets/pokemon/sprites/back/" + id + ".png";
+		pokemon = _playerPokemonRect;
+	}
+	// Else display the opponent's pokemon
+	else if (_opponentPokemon.id == id) {
+
+		filepath = "assets/pokemon/sprites/" + id + ".png";
+		pokemon = _opponentPokemonRect;
+	}
+	
 
 	_interface.render(NULL, &pokemon, filepath);
 }
@@ -218,7 +239,7 @@ Game::Game() {
 	_playerPokemon.setAttack(_attackList["Ember"], 2);
 	_playerPokemon.setAttack(_attackList["DefenseCurl"], 3);
 
-	_opponentPokemon = _pokemonList["Venasaur"];
+	_opponentPokemon = _pokemonList["Croagunk"];
 	_opponentPokemon.setAttack(_attackList["Tackle"], 0);
 	_opponentPokemon.setAttack(_attackList["Growth"], 1);
 	_opponentPokemon.setAttack(_attackList["VineWhip"], 2);
@@ -246,7 +267,9 @@ void Game::run() {
 
 		// Render Pokemon
 		displayPokemon(_playerPokemon.id);
-		_interface.displayImage("OpponentPokemon");
+
+		if (_playerPokemon.id != _opponentPokemon.id) // Don't display opponent's pokemon if they have the same id, displayPokemon function will
+			displayPokemon(_opponentPokemon.id);	  // print them both at the same time if they're the same
 
 		// Render Pokemon HP Boxes
 		_interface.displayImage("PlayerPokemonBox");
@@ -267,6 +290,12 @@ void Game::run() {
 
 		case menuState::FIGHT:
 			_interface.displayImage("FightMenu");
+
+			// Render Buttons
+			_interface.displayButton("Fire");
+			_interface.displayButton("Normal");
+			_interface.displayButton("Grass");
+			_interface.displayButton("Electric");
 			break;
 		case menuState::POKEMON:
 			break;

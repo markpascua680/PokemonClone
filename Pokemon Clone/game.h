@@ -31,12 +31,18 @@ class Game
 
 	// Rendering
 	void displayPokemon(std::string id);
+
 	// Game States
 
 	// Game Events
-	void changePokemon(std::string name) {
+	void changePlayerPokemon(std::string name) {
 
 		_playerPokemon = _pokemonList[name];
+	}
+
+	void changeOpponentPokemon(std::string name) {
+
+		_opponentPokemon = _pokemonList[name];
 	}
 public:
 	Game();
@@ -53,10 +59,14 @@ private:
 	int _windowHeight;
 
 	// Player/Opponent dimensions on screen
-	int _playerX = 288;
-	int _playerY = 540;
-	int _playerW = 500;
-	int _playerH = 400;
+	SDL_Rect _playerPokemonRect = { 288, 540, 400, 400 };
+	SDL_Rect _opponentPokemonRect = { 1152, 270, 400, 400 };
+
+	// Button Rects; buttons at certain positions of the fight menu
+	SDL_Rect atkTopLeft = { 0, 930, 700, 75 };
+	SDL_Rect atkTopRight = { 690, 930, 695, 75 };
+	SDL_Rect atkBottomLeft = { 0, 1005, 700, 75 };
+	SDL_Rect atkBottomRight = { 690, 1005, 695, 75 };
 
 	// Game Data
 	bool _quitGame = false;
