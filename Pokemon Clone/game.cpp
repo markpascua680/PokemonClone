@@ -1,6 +1,5 @@
 #include "game.h"
-// TODO: Find attack stats data
-// TODO: Fix pokemon.txt file to correctly read data; NULL absent values
+
 void Game::initPokemon() { // Load the pokemon from database
 
 	std::ifstream pokemonData;
@@ -221,6 +220,38 @@ void Game::displayPokemon(std::string id) {
 	_interface.render(NULL, &pokemon, filepath);
 }
 
+void Game::makeAttackButtons() {
+
+	for (int i = 0; i < 4; i++) {
+		std::string type = _playerPokemon.attacks[i].getElementType();
+
+		Button b = _interface.buttons[type];
+		std::string filepath = "assets/BattleUI/battleFightButtons.png";
+
+		switch (i)
+		{
+		case 0:
+			b.setDstRect(atkTopLeft);
+			_interface.addButton("Attack 1", &b.srcRect, &b.hoverRect, &b.dstRect, filepath);
+			break;
+		case 1:
+			b.setDstRect(atkTopRight);
+			_interface.addButton("Attack 2", &b.srcRect, &b.hoverRect, &b.dstRect, filepath);
+			break;
+		case 2:
+			b.setDstRect(atkBottomLeft);
+			_interface.addButton("Attack 3", &b.srcRect, &b.hoverRect, &b.dstRect, filepath);
+			break;
+		case 3:
+			b.setDstRect(atkBottomRight);
+			_interface.addButton("Attack 4", &b.srcRect, &b.hoverRect, &b.dstRect, filepath);
+			break;
+		default:
+			break;
+		}
+	}
+}
+
 Game::Game() {
 
 	_windowWidth = _interface.WINDOW_WIDTH;
@@ -238,12 +269,15 @@ Game::Game() {
 	_playerPokemon.setAttack(_attackList["FireFang"], 1);
 	_playerPokemon.setAttack(_attackList["Ember"], 2);
 	_playerPokemon.setAttack(_attackList["DefenseCurl"], 3);
+	makeAttackButtons();
+	
 
-	_opponentPokemon = _pokemonList["Croagunk"];
+	_opponentPokemon = _pokemonList["Turtwig"];
 	_opponentPokemon.setAttack(_attackList["Tackle"], 0);
 	_opponentPokemon.setAttack(_attackList["Growth"], 1);
 	_opponentPokemon.setAttack(_attackList["VineWhip"], 2);
 	_opponentPokemon.setAttack(_attackList["RazorLeaf"], 3);
+
 }
 
 Game::~Game() {
@@ -292,10 +326,10 @@ void Game::run() {
 			_interface.displayImage("FightMenu");
 
 			// Render Buttons
-			_interface.displayButton("Fire");
-			_interface.displayButton("Normal");
-			_interface.displayButton("Grass");
-			_interface.displayButton("Electric");
+			_interface.displayButton("Attack 1");
+			_interface.displayButton("Attack 2");
+			_interface.displayButton("Attack 3");
+			_interface.displayButton("Attack 4");
 			break;
 		case menuState::POKEMON:
 			break;
@@ -355,6 +389,23 @@ void Game::handleButtonEvents(SDL_Event& e) {
 		}
 		break;
 	case Game::menuState::FIGHT:
+
+		// Mouse click events
+		if (e.type == SDL_MOUSEBUTTONDOWN) {
+
+			if (_interface.isButtonHovered(mousePos, "Attack 1")) {
+				_menuState = menuState::FIGHT;
+			}
+
+			if (_interface.isButtonHovered(mousePos, "Attack 2")) {
+			}
+
+			if (_interface.isButtonHovered(mousePos, "Attack 3")) {
+			}
+
+			if (_interface.isButtonHovered(mousePos, "Attack 4")) {
+			}
+		}
 
 		// Keyboard events
 		if (e.type == SDL_KEYDOWN) {

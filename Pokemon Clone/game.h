@@ -21,57 +21,7 @@
 #include <vector>
 #include "interface.h"
 
-class Game
-{
-	// Initialization
-	void initPokemon();
-	void initAttackList();
-	void initImages();
-	void initButtons();
-
-	// Rendering
-	void displayPokemon(std::string id);
-
-	// Game States
-
-	// Game Events
-	void changePlayerPokemon(std::string name) {
-
-		_playerPokemon = _pokemonList[name];
-	}
-
-	void changeOpponentPokemon(std::string name) {
-
-		_opponentPokemon = _pokemonList[name];
-	}
-public:
-	Game();
-	~Game();
-
-	void run();
-	void handleButtonEvents(SDL_Event& e);
-
-private:
-
-	// Game Window
-	Interface _interface;
-	int _windowWidth;
-	int _windowHeight;
-
-	// Player/Opponent dimensions on screen
-	SDL_Rect _playerPokemonRect = { 288, 540, 400, 400 };
-	SDL_Rect _opponentPokemonRect = { 1152, 270, 400, 400 };
-
-	// Button Rects; buttons at certain positions of the fight menu
-	SDL_Rect atkTopLeft = { 0, 930, 700, 75 };
-	SDL_Rect atkTopRight = { 690, 930, 695, 75 };
-	SDL_Rect atkBottomLeft = { 0, 1005, 700, 75 };
-	SDL_Rect atkBottomRight = { 690, 1005, 695, 75 };
-
-	// Game Data
-	bool _quitGame = false;
-
-		// Holds attributes of each attack
+// Holds attributes of each attack
 	class Attack {
 	public:
 		int tempPP;
@@ -137,6 +87,7 @@ private:
 		int speed;
 
 		std::vector<Attack> attacks{ 4 }; // Each pokemon can have up to 4 attacks
+		std::vector<Button> attackButtons{ 4 }; // Buttons for each of the attacks
 
 		//Sets attack a at a certain position, up to 4 attacks can be set for one Pokemon
 		void setAttack(Attack a, int position) {
@@ -149,6 +100,59 @@ private:
 				std::cout << "Do you want to replace this attack with " << a.getName() << " ? " << std::endl;
 		}
 	};
+
+class Game
+{
+	// Initialization
+	void initPokemon();
+	void initAttackList();
+	void initImages();
+	void initButtons();
+
+	// Rendering
+	void displayPokemon(std::string id);
+		// Creates a set of buttons for the pokemon's attacks
+	void makeAttackButtons();
+
+	// Game States
+
+	// Game Events
+	void changePlayerPokemon(std::string name) {
+
+		_playerPokemon = _pokemonList[name];
+	}
+
+	void changeOpponentPokemon(std::string name) {
+
+		_opponentPokemon = _pokemonList[name];
+	}
+public:
+	Game();
+	~Game();
+
+	void run();
+	void handleButtonEvents(SDL_Event& e);
+
+private:
+
+	// Game Window
+	Interface _interface;
+	int _windowWidth;
+	int _windowHeight;
+
+	// Player/Opponent dimensions on screen
+	SDL_Rect _playerPokemonRect = { 288, 540, 400, 400 };
+	SDL_Rect _opponentPokemonRect = { 1152, 270, 400, 400 };
+
+	// Button Rects; buttons at certain positions of the fight menu
+	SDL_Rect atkTopLeft = { 0, 930, 695, 80 };
+	SDL_Rect atkTopRight = { 700, 930, 695, 80 };
+	SDL_Rect atkBottomLeft = { 0, 1005, 695, 80 };
+	SDL_Rect atkBottomRight = { 700, 1005, 695, 80 };
+
+	// Game Data
+	bool _quitGame = false;
+
 
 	// Game States
 	enum class menuState

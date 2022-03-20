@@ -2,6 +2,35 @@
 #include <SDL_image.h>
 #include <map>
 
+struct Image
+{
+	// Image filepath
+	std::string filepath;
+
+	// Clip of the source image
+	SDL_Rect rect;
+};
+
+struct Button
+{
+	// Clip of the source image to be made into a button
+	SDL_Rect srcRect;
+
+	// Appearance of the images while mouse hovers over it
+	SDL_Rect hoverRect;
+
+	// Destination that button will be drawn on screen
+	SDL_Rect dstRect;
+
+	// Image filepath that button is from
+	std::string filePath;
+
+	// Change where button is rendered on screen
+	void setDstRect(SDL_Rect dRect) {
+		dstRect = dRect;
+	}
+};
+
 class Interface
 {
 public:
@@ -27,17 +56,11 @@ public:
 	void addImage(std::string name, SDL_Rect* rect, std::string filePath);
 	void displayImage(std::string name);
 
-	struct Image
-	{
-		// Image filepath
-		std::string filepath;
-
-		// Clip of the source image
-		SDL_Rect rect;		
-	};
-
 	// Holds images with key = image name
-	std::map<std::string , Image> images;
+	std::map<std::string, Image> images;
+
+	// Holds buttons with key = button name
+	std::map<std::string, Button> buttons; 
 
 private:
 
@@ -47,22 +70,6 @@ private:
 	SDL_Texture* _texture;
 	SDL_Renderer* _renderer;
 
-	struct Button
-	{
-		// Clip of the source image to be made into a button
-		SDL_Rect _srcRect;
 
-		// Appearance of the images while mouse hovers over it
-		SDL_Rect _hoverRect;
-
-		// Destination that button will be drawn on screen
-		SDL_Rect _dstRect;
-
-		// Image filepath that button is from
-		std::string _filePath;
-	};
-
-	// Holds buttons with key = button name
-	std::map<std::string, Button> _buttons; 
 
 };

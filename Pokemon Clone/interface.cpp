@@ -84,28 +84,28 @@ void Interface::setWindowHeight(int h) {
 void Interface::addButton(std::string button, SDL_Rect* srcRect, SDL_Rect* _hoverRect, SDL_Rect* dstRect, std::string filePath) {
 
 	Button b = { *srcRect, *_hoverRect, *dstRect,  filePath };
-	_buttons[button] = b;
+	buttons[button] = b;
 }
 
 // Takes the name of the button
 void Interface::displayButton(std::string button) {
 	
-	Button b = _buttons[button];
+	Button b = buttons[button];
 
 	SDL_GetMouseState(&mousePos.x, &mousePos.y);
 
 	// Display the button's hover image if mouse is over it, display original image if not
 	if (isButtonHovered(mousePos, button))
-		render(&b._hoverRect, &b._dstRect, b._filePath);
+		render(&b.hoverRect, &b.dstRect, b.filePath);
 	else
-		render(&b._srcRect, &b._dstRect, b._filePath);
+		render(&b.srcRect, &b.dstRect, b.filePath);
 }
 
 // Returns true if mouse is hovering over button
 bool Interface::isButtonHovered(SDL_Point mousePos, std::string button) {
 
-	Button b = _buttons[button];
-	if (SDL_PointInRect(&mousePos, &b._dstRect)) {
+	Button b = buttons[button];
+	if (SDL_PointInRect(&mousePos, &b.dstRect)) {
 		return true;
 	}
 
