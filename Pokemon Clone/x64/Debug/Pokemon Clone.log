@@ -1,2 +1,5 @@
-﻿  game.cpp
+﻿  main.cpp
+  game.cpp
+  interface.cpp
+  Generating Code...
   Pokemon Clone.vcxproj -> C:\Users\markp\source\repos\Projects\Pokemon Clone\x64\Debug\Pokemon Clone.exe

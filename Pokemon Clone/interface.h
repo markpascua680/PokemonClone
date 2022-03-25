@@ -11,8 +11,18 @@ struct Image
 	SDL_Rect rect;
 };
 
-struct Button
+class Button
 {
+public:
+	Button();
+	Button(SDL_Rect srcRect, SDL_Rect hoverRect, SDL_Rect dstRect, std::string filePath);
+	~Button();
+
+	// Change where button is rendered on screen
+	void setDstRect(SDL_Rect dRect) {
+		dstRect = dRect;
+	}
+	
 	// Clip of the source image to be made into a button
 	SDL_Rect srcRect;
 
@@ -25,10 +35,8 @@ struct Button
 	// Image filepath that button is from
 	std::string filePath;
 
-	// Change where button is rendered on screen
-	void setDstRect(SDL_Rect dRect) {
-		dstRect = dRect;
-	}
+private:
+
 };
 
 class Interface
@@ -71,7 +79,4 @@ private:
 	SDL_Surface* _surface;
 	SDL_Texture* _texture;
 	SDL_Renderer* _renderer;
-
-
-
 };
