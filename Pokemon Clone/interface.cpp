@@ -26,9 +26,17 @@ Button::~Button() {
 
 Interface::Interface() {
 
+	_font = NULL;
+	_fontSize = 0;
+
 	// End program if fail to initialize
 	if (SDL_Init(SDL_INIT_EVERYTHING < 0)) {
 		std::cout << "UNABLE TO SDL_INIT_EVERYTHING" << std::endl;
+		EXIT_FAILURE;
+	}
+
+	if (TTF_Init() < 0) {
+		std::cout << "UNABLE TO TTF_INIT" << std::endl;
 		EXIT_FAILURE;
 	}
 
@@ -144,7 +152,31 @@ void Interface::displayImage(std::string name) {
 	render(NULL, &i.rect, i.filepath);
 }
 
-void Interface::displayText(SDL_Rect* dstRect) {
+void Interface::setFont(std::string fontFile) {
+	
+	_font = TTF_OpenFont(fontFile.c_str(), _fontSize);
 
+	if (!_font)
+		std::cout << TTF_GetError() << std::endl;
+}
 
+void Interface::setFontSize(int size) {
+
+	_fontSize = size;
+}
+
+void Interface::displayText(std::string text, SDL_Rect* dstRect) {
+
+	_surface = TTF_RenderText_Solid(_font, text.c_str(), _white);
+	_texture = SDL_CreateTextureFromSurface(_renderer, _surface);
+
+	if (_surface == NULL) {
+
+		std::cout << "Unable to render text surface! SDL_ttf Error: " << TTF_GetError() << std::endl;
+	}
+
+	SDL_RenderCopy(_renderer, _texture, NULL, dstRect);
+
+	SDL_FreeSurface(_surface);
+	SDL_DestroyTexture(_texture);
 }

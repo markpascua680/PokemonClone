@@ -1,5 +1,6 @@
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_ttf.h>
 #include <map>
 
 struct Image
@@ -15,7 +16,7 @@ class Button
 {
 public:
 	Button();
-	Button(SDL_Rect srcRect, SDL_Rect hoverRect, SDL_Rect dstRect, std::string filePath);
+	Button(SDL_Rect sRect, SDL_Rect hRect, SDL_Rect dRect, std::string path);
 	~Button();
 
 	// Change where button is rendered on screen
@@ -54,18 +55,24 @@ public:
 	void clear();
 	void update();
 
+	// Window Functions
 	void setWindowWidth(int w);
 	void setWindowHeight(int h);
 
+	// Button Functions
 	void addButton(std::string button, SDL_Rect* srcRect, SDL_Rect* _hoverRect, SDL_Rect* dstRect, std::string filePath);
 	void displayButton(std::string button);
 	bool isButtonHovered(SDL_Point mousePos, std::string button);
 
+	// Image Functions
 	void addImage(std::string name, SDL_Rect* rect, std::string filePath);
 	void displayImage(std::string name);
 
-	void displayText(SDL_Rect* dstRect);											 // TODO: Display text to screen
-
+	// Text Functions
+	void setFont(std::string fontFile);
+	void setFontSize(int size);
+	void displayText(std::string text, SDL_Rect* dstRect);
+	
 	// Holds images with key = image name
 	std::map<std::string, Image> images;
 
@@ -79,4 +86,10 @@ private:
 	SDL_Surface* _surface;
 	SDL_Texture* _texture;
 	SDL_Renderer* _renderer;
+
+	// Font
+	TTF_Font* _font;
+	int _fontSize;
+	SDL_Color _black = { 0, 0, 0 };
+	SDL_Color _white = { 255, 255, 255 };
 };

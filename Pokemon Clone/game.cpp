@@ -254,6 +254,9 @@ void Game::makeAttackButtons() {
 
 Game::Game() {
 
+	_interface.setFontSize(14);
+	_interface.setFont("assets/font/pokemonFont.ttf");
+
 	_windowWidth = _interface.WINDOW_WIDTH;
 	_windowHeight = _interface.WINDOW_HEIGHT;
 
@@ -270,7 +273,6 @@ Game::Game() {
 	_playerPokemon.setAttack(_attackList["Ember"], 2);
 	_playerPokemon.setAttack(_attackList["DefenseCurl"], 3);
 	makeAttackButtons();
-	
 
 	_opponentPokemon = _pokemonList["Turtwig"];
 	_opponentPokemon.setAttack(_attackList["Tackle"], 0);
@@ -330,6 +332,12 @@ void Game::run() {
 			_interface.displayButton("Attack 2");
 			_interface.displayButton("Attack 3");
 			_interface.displayButton("Attack 4");
+
+			_interface.displayText(_playerPokemon.attacks[0].getName(), &atkTopLeft);
+			_interface.displayText(_playerPokemon.attacks[1].getName(), &atkTopRight);
+			_interface.displayText(_playerPokemon.attacks[2].getName(), &atkBottomLeft);
+			_interface.displayText(_playerPokemon.attacks[3].getName(), &atkBottomRight);
+
 			break;
 		case menuState::POKEMON:
 			break;
