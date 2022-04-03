@@ -116,8 +116,9 @@ class Game
 
 	// Rendering
 	void displayPokemon(std::string id);
-	void displayAttackInfo(Attack atk); // Shows attacks' damage type, element type, and pp counter
-		// Creates a set of buttons for the pokemon's attacks
+	void displayAttackInfo(Attack& atk); // Shows attacks' damage type, element type, and pp counter
+	void displayUI();
+		// Creates a set of buttons to be displayed for the pokemon's attacks
 	void makeAttackButtons();
 
 	// Game States
@@ -135,6 +136,13 @@ class Game
 		
 		// Decrease pokemon HP when taking damage
 	void decreaseHealth(Pokemon pokemon, int damage);
+
+		// Player or opponent uses an attack
+	void useAttack(Pokemon& pokemon, Attack& atk);
+
+	// Damage calculation
+	void calculateDamage(int power);
+
 public:
 	Game();
 	~Game();

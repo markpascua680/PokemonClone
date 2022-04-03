@@ -10,6 +10,38 @@
 
 #include "game.h"
 
+void Game::makeAttackButtons() {
+
+	for (int i = 0; i < 4; i++) {
+		std::string type = _playerPokemon.attacks[i].getElementType();
+
+		Button b = _interface.buttons[type];
+		std::string filepath = "assets/BattleUI/battleFightButtons.png";
+
+		switch (i)
+		{
+		case 0:
+			b.setDstRect(atkTopLeft);
+			_interface.addButton("Attack 1", &b.srcRect, &b.hoverRect, &b.dstRect, filepath);
+			break;
+		case 1:
+			b.setDstRect(atkTopRight);
+			_interface.addButton("Attack 2", &b.srcRect, &b.hoverRect, &b.dstRect, filepath);
+			break;
+		case 2:
+			b.setDstRect(atkBottomLeft);
+			_interface.addButton("Attack 3", &b.srcRect, &b.hoverRect, &b.dstRect, filepath);
+			break;
+		case 3:
+			b.setDstRect(atkBottomRight);
+			_interface.addButton("Attack 4", &b.srcRect, &b.hoverRect, &b.dstRect, filepath);
+			break;
+		default:
+			break;
+		}
+	}
+}
+
 void Game::initPokemon() { // Load the pokemon from database
 
 	std::ifstream pokemonData;
@@ -195,36 +227,4 @@ void Game::initButtons() {
 	}
 
 	buttonData.close();
-}
-
-void Game::makeAttackButtons() {
-
-	for (int i = 0; i < 4; i++) {
-		std::string type = _playerPokemon.attacks[i].getElementType();
-
-		Button b = _interface.buttons[type];
-		std::string filepath = "assets/BattleUI/battleFightButtons.png";
-
-		switch (i)
-		{
-		case 0:
-			b.setDstRect(atkTopLeft);
-			_interface.addButton("Attack 1", &b.srcRect, &b.hoverRect, &b.dstRect, filepath);
-			break;
-		case 1:
-			b.setDstRect(atkTopRight);
-			_interface.addButton("Attack 2", &b.srcRect, &b.hoverRect, &b.dstRect, filepath);
-			break;
-		case 2:
-			b.setDstRect(atkBottomLeft);
-			_interface.addButton("Attack 3", &b.srcRect, &b.hoverRect, &b.dstRect, filepath);
-			break;
-		case 3:
-			b.setDstRect(atkBottomRight);
-			_interface.addButton("Attack 4", &b.srcRect, &b.hoverRect, &b.dstRect, filepath);
-			break;
-		default:
-			break;
-		}
-	}
 }

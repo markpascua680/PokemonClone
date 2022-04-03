@@ -1,0 +1,5 @@
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(495,5): warning MSB8004: Intermediate Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Intermediate Directory.
+  battle.cpp
+  game.cpp
+  Generating Code...
+  Pokemon Clone.vcxproj -> C:\Users\markp\source\repos\Projects\Pokemon Clone\x64\Debug\Pokemon Clone.exe

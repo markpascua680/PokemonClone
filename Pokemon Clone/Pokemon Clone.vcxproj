@@ -80,6 +80,7 @@
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>C:\Users\markp\OneDrive\Documents\SDL2_ttf-2.0.12\include;C:\Users\markp\OneDrive\Documents\SDL2_image-2.0.5\include;C:\Users\markp\OneDrive\Documents\SDL2\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Users\markp\OneDrive\Documents\SDL2_ttf-2.0.12\lib\x64;C:\Users\markp\OneDrive\Documents\SDL2_image-2.0.5\lib\x64;C:\Users\markp\OneDrive\Documents\SDL2\lib\x64;$(LibraryPath)</LibraryPath>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
