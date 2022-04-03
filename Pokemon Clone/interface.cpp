@@ -184,3 +184,9 @@ void Interface::displayText(std::string text, SDL_Rect* dstRect, SDL_Color color
 	SDL_FreeSurface(_surface);
 	SDL_DestroyTexture(_texture);
 }
+
+void Interface::displayRect(SDL_Rect* rect, SDL_Color color) {
+	
+	SDL_SetRenderDrawColor(_renderer, color.r, color.g, color.b, 0);
+	SDL_RenderFillRect(_renderer, rect);
+}

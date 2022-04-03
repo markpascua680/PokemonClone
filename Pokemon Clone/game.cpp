@@ -259,6 +259,12 @@ void Game::makeAttackButtons() {
 	}
 }
 
+void Game::decreaseHealth(Pokemon pokemon, int damage) {
+
+	// tempHP -= 100;
+	// playerHP.w *= tempHP;
+	// playerHP.w /= _playerPokemon.maxHp;
+}
 Game::Game() {
 
 	_interface.setFontSize(24);
@@ -286,7 +292,6 @@ Game::Game() {
 	_opponentPokemon.setAttack(_attackList["Growth"], 1);
 	_opponentPokemon.setAttack(_attackList["VineWhip"], 2);
 	_opponentPokemon.setAttack(_attackList["RazorLeaf"], 3);
-
 }
 
 Game::~Game() {
@@ -315,15 +320,17 @@ void Game::run() {
 			displayPokemon(_opponentPokemon.id);	  // print them both at the same time if they're the same
 
 		// Render Pokemon HP Boxes
-		_interface.displayImage("PlayerPokemonHPBox");
-		_interface.displayText(_playerPokemon.name, &playerPokemonNameTxt, white);
-		_interface.displayText("Lvl. 100", &playerPokemonLevelTxt, white);
-		_interface.displayText(std::to_string(_playerPokemon.maxHp) + "/" + std::to_string(_playerPokemon.maxHp), &playerPokemonHPTxt, black);
+		_interface.displayImage("PlayerPokemonHPBox");	// Display the box template	
+		_interface.displayText(_playerPokemon.name, &playerPokemonNameTxt, white);	// Display pokemon name
+		_interface.displayText("Lvl. 100", &playerPokemonLevelTxt, white);	// Display pokemon level
+		_interface.displayText(std::to_string(_playerPokemon.maxHp) + "/" + std::to_string(_playerPokemon.maxHp), &playerPokemonHPTxt, black);	// Display pokemon HP
+		_interface.displayRect(&playerHP, green);	// Display player pokemon's HP bar
 
 		_interface.displayImage("OpponentPokemonHPBox");
 		_interface.displayText(_opponentPokemon.name, &opponentPokemonNameTxt, white);
 		_interface.displayText("Lvl. 100", &opponentPokemonLevelTxt, white);
 		_interface.displayText(std::to_string(_opponentPokemon.maxHp) + "/" + std::to_string(_opponentPokemon.maxHp), &opponentPokemonHPTxt, black);
+		_interface.displayRect(&opponentHP, green);
 
 		// Render UI menus
 		switch (_menuState)

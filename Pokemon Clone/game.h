@@ -132,6 +132,9 @@ class Game
 
 		_opponentPokemon = _pokemonList[name];
 	}
+		
+		// Decrease pokemon HP when taking damage
+	void decreaseHealth(Pokemon pokemon, int damage);
 public:
 	Game();
 	~Game();
@@ -174,13 +177,18 @@ private:
 	SDL_Rect opponentPokemonHPTxt = { 375, 280, 0, 0 };
 	SDL_Rect opponentPokemonLevelTxt = { 675, 130, 0, 0 };
 
-	// Text colors
+	// HP Bars
+	SDL_Rect playerHP = { 1096, 749, 364, 22 };
+	SDL_Rect opponentHP = { 170, 249, 364, 22 };
+
+	// Colors
 	SDL_Color black = { 0, 0, 0 };	
 	SDL_Color white = { 255, 255, 255 };
+	SDL_Color green = { 0, 255, 0 };
+	SDL_Color red = { 255, 0, 0 };
 
 	// Game Data
 	bool _quitGame = false;
-
 
 	// Game States
 	enum class menuState

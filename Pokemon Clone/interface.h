@@ -72,6 +72,9 @@ public:
 	void setFont(std::string fontFile);
 	void setFontSize(int size);
 	void displayText(std::string text, SDL_Rect* dstRect, SDL_Color color);
+
+	// Draw other things functions
+	void displayRect(SDL_Rect* rect, SDL_Color color);
 	
 	// Holds images with key = image name
 	std::map<std::string, Image> images;
