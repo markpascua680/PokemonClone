@@ -19,7 +19,7 @@ public:
 	Button(SDL_Rect sRect, SDL_Rect hRect, SDL_Rect dRect, std::string path);
 	~Button();
 
-	// Change where button is rendered on screen
+	// Sets where button is rendered on screen
 	void setDstRect(SDL_Rect dRect) {
 		dstRect = dRect;
 	}

@@ -175,6 +175,10 @@ void Interface::displayText(std::string text, SDL_Rect* dstRect) {
 		std::cout << "Unable to render text surface! SDL_ttf Error: " << TTF_GetError() << std::endl;
 	}
 
+	// Prevent stretching of the text
+	dstRect->w = _surface->w;
+	dstRect->h = _surface->h;
+
 	SDL_RenderCopy(_renderer, _texture, NULL, dstRect);
 
 	SDL_FreeSurface(_surface);

@@ -43,11 +43,16 @@
 			_damageType = damageType;
 			_power = power;
 			_accuracy = accuracy;
-			_pp, tempPP = pp1;
+			_pp = pp1;
+			tempPP = pp1;
 		}
 
 		int getPower() {
 			return _power;
+		}
+
+		int getPP() {
+			return _pp;
 		}
 
 		std::string getName() {
@@ -111,6 +116,7 @@ class Game
 
 	// Rendering
 	void displayPokemon(std::string id);
+	void displayAttackInfo(Attack atk); // Shows attacks' damage type, element type, and pp counter
 		// Creates a set of buttons for the pokemon's attacks
 	void makeAttackButtons();
 
@@ -149,6 +155,15 @@ private:
 	SDL_Rect atkTopRight = { 700, 930, 695, 80 };
 	SDL_Rect atkBottomLeft = { 0, 1005, 695, 80 };
 	SDL_Rect atkBottomRight = { 700, 1005, 695, 80 };
+
+	// Text Boxes
+	SDL_Rect atkTopLeftTxt = { 30, 940, 695, 80 };
+	SDL_Rect atkTopRightTxt = { 730, 940, 695, 80 };
+	SDL_Rect atkBottomLeftTxt = { 30, 1015, 695, 80 };
+	SDL_Rect atkBottomRightTxt = { 730, 1015, 695, 80 };
+	SDL_Rect elementTypeTxt = { 1500, 940, 150, 40 };
+	SDL_Rect damageTypeTxt = { 1500, 980, 150, 40 };
+	SDL_Rect ppTxt = { 1500, 1020, 150, 40 };
 
 	// Game Data
 	bool _quitGame = false;
