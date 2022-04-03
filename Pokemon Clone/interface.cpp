@@ -165,9 +165,9 @@ void Interface::setFontSize(int size) {
 	_fontSize = size;
 }
 
-void Interface::displayText(std::string text, SDL_Rect* dstRect) {
+void Interface::displayText(std::string text, SDL_Rect* dstRect, SDL_Color color) {
 
-	_surface = TTF_RenderText_Solid(_font, text.c_str(), _white);
+	_surface = TTF_RenderText_Solid(_font, text.c_str(), color);
 	_texture = SDL_CreateTextureFromSurface(_renderer, _surface);
 
 	if (_surface == NULL) {

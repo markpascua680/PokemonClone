@@ -13,7 +13,7 @@ void Game::initPokemon() { // Load the pokemon from database
 
 	// Reads data from file in this order
 	std::string id, name, type1, type2;
-	int maxHp, hp, atk, def, spAtk, spDef, speed;
+	int maxHp, baseHp, atk, def, spAtk, spDef, speed;
 
 	std::string value; // Read each value
 
@@ -28,14 +28,14 @@ void Game::initPokemon() { // Load the pokemon from database
 		iss >> type1;
 		iss >> type2;
 		iss >> maxHp;
-		iss >> hp;
+		iss >> baseHp;	// Hp at pokemon level 1
 		iss >> atk;
 		iss >> def;
 		iss >> spAtk;
 		iss >> spDef;
 		iss >> speed;
 
-		Pokemon p = { id, name, type1, type2, maxHp, hp, atk, def, spAtk, spDef, speed };
+		Pokemon p = { id, name, type1, type2, maxHp, baseHp, atk, def, spAtk, spDef, speed };
 
 		_pokemonList[name] = p;
 	}
@@ -180,7 +180,7 @@ void Game::initButtons() {
 				break;
 			}
 		}
-
+		
 		_interface.addButton(name, &src, &hover, &dst, image);
 	}
 
@@ -222,9 +222,9 @@ void Game::displayPokemon(std::string id) {
 
 void Game::displayAttackInfo(Attack atk) {
 
-	_interface.displayText(atk.getElementType(), &elementTypeTxt);
-	_interface.displayText(atk.getDamageType(), &damageTypeTxt);
-	_interface.displayText(std::to_string(atk.tempPP) + "/" + std::to_string(atk.getPP()), &ppTxt);
+	_interface.displayText(atk.getElementType(), &elementTypeTxt, white);
+	_interface.displayText(atk.getDamageType(), &damageTypeTxt, white);
+	_interface.displayText(std::to_string(atk.tempPP) + "/" + std::to_string(atk.getPP()), &ppTxt, white);
 }
 
 void Game::makeAttackButtons() {
@@ -273,7 +273,7 @@ Game::Game() {
 	initAttackList();
 	initImages();
 	initButtons();
-
+																							   // TODO: Implement tempHP for pokemon
 	_playerPokemon = _pokemonList["Infernape"];
 	_playerPokemon.setAttack(_attackList["Scratch"], 0);
 	_playerPokemon.setAttack(_attackList["DefenseCurl"], 1);
@@ -281,7 +281,7 @@ Game::Game() {
 	_playerPokemon.setAttack(_attackList["Ember"], 3);
 	makeAttackButtons();
 
-	_opponentPokemon = _pokemonList["Turtwig"];
+	_opponentPokemon = _pokemonList["Darkrai"];
 	_opponentPokemon.setAttack(_attackList["Tackle"], 0);
 	_opponentPokemon.setAttack(_attackList["Growth"], 1);
 	_opponentPokemon.setAttack(_attackList["VineWhip"], 2);
@@ -295,7 +295,7 @@ Game::~Game() {
 }
 
 void Game::run() {
-	
+
 	SDL_Event e;
 
 	while (!_quitGame) {
@@ -315,14 +315,22 @@ void Game::run() {
 			displayPokemon(_opponentPokemon.id);	  // print them both at the same time if they're the same
 
 		// Render Pokemon HP Boxes
-		_interface.displayImage("PlayerPokemonBox");
-		_interface.displayImage("OpponentPokemonBox");
+		_interface.displayImage("PlayerPokemonHPBox");
+		_interface.displayText(_playerPokemon.name, &playerPokemonNameTxt, white);
+		_interface.displayText("Lvl. 100", &playerPokemonLevelTxt, white);
+		_interface.displayText(std::to_string(_playerPokemon.maxHp) + "/" + std::to_string(_playerPokemon.maxHp), &playerPokemonHPTxt, black);
+
+		_interface.displayImage("OpponentPokemonHPBox");
+		_interface.displayText(_opponentPokemon.name, &opponentPokemonNameTxt, white);
+		_interface.displayText("Lvl. 100", &opponentPokemonLevelTxt, white);
+		_interface.displayText(std::to_string(_opponentPokemon.maxHp) + "/" + std::to_string(_opponentPokemon.maxHp), &opponentPokemonHPTxt, black);
 
 		// Render UI menus
 		switch (_menuState)
 		{
 		case menuState::MAIN:
 			_interface.displayImage("Menu");
+			_interface.displayText("What will you do?", &atkTopLeftTxt, white);
 
 			// Render Buttons
 			_interface.displayButton("Fight");
@@ -340,10 +348,10 @@ void Game::run() {
 			_interface.displayButton("Attack 3");
 			_interface.displayButton("Attack 4");
 
-			_interface.displayText(_playerPokemon.attacks[0].getName(), &atkTopLeftTxt);				// TODO: Update Button class; make it easier to create panels of text
-			_interface.displayText(_playerPokemon.attacks[1].getName(), &atkTopRightTxt);
-			_interface.displayText(_playerPokemon.attacks[2].getName(), &atkBottomLeftTxt);
-			_interface.displayText(_playerPokemon.attacks[3].getName(), &atkBottomRightTxt);
+			_interface.displayText(_playerPokemon.attacks[0].getName(), &atkTopLeftTxt, white);
+			_interface.displayText(_playerPokemon.attacks[1].getName(), &atkTopRightTxt, white);
+			_interface.displayText(_playerPokemon.attacks[2].getName(), &atkBottomLeftTxt, white);
+			_interface.displayText(_playerPokemon.attacks[3].getName(), &atkBottomRightTxt, white);
 
 			break;
 		case menuState::POKEMON:
@@ -402,7 +410,7 @@ void Game::handleButtonEvents(SDL_Event& e) {
 			if (_interface.isButtonHovered(mousePos, "Run")) {
 			}
 
-			SDL_Delay(75);
+			SDL_Delay(100); // Prevent multiple inputs when clicking
 		}
 		break;
 	case Game::menuState::FIGHT:
@@ -414,7 +422,13 @@ void Game::handleButtonEvents(SDL_Event& e) {
 			displayAttackInfo(_playerPokemon.attacks[0]);
 
 			if (e.type == SDL_MOUSEBUTTONDOWN) {
-				std::cout << _playerPokemon.name << " used " << _playerPokemon.attacks[0].getName() << "!" << std::endl;
+				_interface.displayImage("MessageBox");
+				_interface.displayText(_playerPokemon.name + " used " + _playerPokemon.attacks[0].getName() + "!", &atkTopLeftTxt, white);
+				_interface.update();
+				SDL_Delay(1500); // Give time for player to read
+
+				_playerPokemon.attacks[0].tempPP--; // Subtract 1 power point
+				SDL_Delay(100); // Prevent multiple inputs when clicking
 			}
 		}
 
@@ -423,7 +437,13 @@ void Game::handleButtonEvents(SDL_Event& e) {
 			displayAttackInfo(_playerPokemon.attacks[1]);
 
 			if (e.type == SDL_MOUSEBUTTONDOWN) {
-				std::cout << _playerPokemon.name << " used " << _playerPokemon.attacks[1].getName() << "!" << std::endl;
+				_interface.displayImage("MessageBox");
+				_interface.displayText(_playerPokemon.name + " used " + _playerPokemon.attacks[1].getName() + "!", &atkTopLeftTxt, white);
+				_interface.update();
+				SDL_Delay(1500); // Give time for player to read
+
+				_playerPokemon.attacks[1].tempPP--; // Subtract 1 power point
+				SDL_Delay(100); // Prevent multiple inputs when clicking
 			}
 		}
 
@@ -432,7 +452,13 @@ void Game::handleButtonEvents(SDL_Event& e) {
 			displayAttackInfo(_playerPokemon.attacks[2]);
 
 			if (e.type == SDL_MOUSEBUTTONDOWN) {
-				std::cout << _playerPokemon.name << " used " << _playerPokemon.attacks[2].getName() << "!" << std::endl;
+				_interface.displayImage("MessageBox");
+				_interface.displayText(_playerPokemon.name + " used " + _playerPokemon.attacks[2].getName() + "!", &atkTopLeftTxt, white);
+				_interface.update();
+				SDL_Delay(1500); // Give time for player to read
+
+				_playerPokemon.attacks[2].tempPP--; // Subtract 1 power point
+				SDL_Delay(100); // Prevent multiple inputs when clicking
 			}
 		}
 
@@ -441,7 +467,13 @@ void Game::handleButtonEvents(SDL_Event& e) {
 			displayAttackInfo(_playerPokemon.attacks[3]);
 
 			if (e.type == SDL_MOUSEBUTTONDOWN) {
-				std::cout << _playerPokemon.name << " used " << _playerPokemon.attacks[3].getName() << "!" << std::endl;
+				_interface.displayImage("MessageBox");
+				_interface.displayText(_playerPokemon.name + " used " + _playerPokemon.attacks[3].getName() + "!", &atkTopLeftTxt, white);
+				_interface.update();
+				SDL_Delay(1500); // Give time for player to read
+
+				_playerPokemon.attacks[3].tempPP--; // Subtract 1 power point
+				SDL_Delay(100); // Prevent multiple inputs when clicking
 			}
 		}		
 

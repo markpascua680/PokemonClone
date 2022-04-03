@@ -34,26 +34,26 @@ ID	Name		Type1		Type2		Max Possible HP		Base HP		Attack		Defense		Sp. Atk		Sp. D
 417 Pachirisu	Electric	NULL		405					60			45			70			45			90			95
 418 Buizel		Water		NULL		330					55			65			35			60			30			85
 419 Floatzel	Water		NULL		495					85			105			55			85			50			115
-420 Cherubi		Grass 275 45 35 45 62 53 35
-421 Cherrim		Grass 450 70 60 70 87 78 85
-422 Shellos		Water 325 76 48 48 57 62 34
-423 Gastrodon	Water Ground 475 111 83 68 92 82 39
-424 Ambipom		Normal 482 75 100 66 60 66 115
-425 Drifloon	Ghost Flying 348 90 50 34 60 44 70
-426 Drifblim	Ghost Flying 498 150 80 44 90 54 80
-427 Buneary		Normal 350 55 66 44 44 56 85
-428 Lopunny		Normal 480 65 76 84 54 96 105
-429 Mismagius	Ghost 495 60 60 60 105 105 105
-430 Honchkrow	Dark Flying 505 100 125 52 105 52 71
-431 Glameow		Normal 310 49 55 42 42 37 85
-432 Purugly		Normal 452 71 82 64 64 59 112
-433 Chingling	Psychic 285 45 30 50 65 50 45
-434 Stunky		Poison Dark 329 63 63 47 41 41 74
-435 Skuntank	Poison Dark 479 103 93 67 71 61 84
-436 Bronzor		Steel Psychic 300 57 24 86 24 86 23
-437 Bronzong	Steel Psychic 500 67 89 116 79 116 33
-438 Bonsly		Rock 290 50 80 95 10 45 10
-439 Mime Jr.	Psychic Fairy 310 20 25 45 70 90 60
+420 Cherubi		Grass		NULL		275					45			35			45			62			53			35
+421 Cherrim		Grass		NULL		450					70			60			70			87			78			85
+422 Shellos		Water		NULL		325					76			48			48			57			62			34
+423 Gastrodon	Water		Ground		475					111			83			68			92			82			39
+424 Ambipom		Normal		NULL		482					75			100			66			60			66			115
+425 Drifloon	Ghost		Flying		348					90			50			34			60			44			70
+426 Drifblim	Ghost		Flying		498					150			80			44			90			54			80
+427 Buneary		Normal		NULL		350					55			66			44			44			56			85
+428 Lopunny		Normal		NULL		480					65			76			84			54			96			105
+429 Mismagius	Ghost		NULL		495					60			60			60			105			105			105
+430 Honchkrow	Dark		Flying		505					100			125			52			105			52			71
+431 Glameow		Normal		NULL		310					49			55			42			42			37			85
+432 Purugly		Normal		NULL		452					71			82			64			64			59			112
+433 Chingling	Psychic		NULL		285					45			30			50			65			50			45
+434 Stunky		Poison		Dark		329					63			63			47			41			41			74
+435 Skuntank	Poison		Dark		479					103			93			67			71			61			84
+436 Bronzor		Steel		Psychic		300					57			24			86			24			86			23
+437 Bronzong	Steel		Psychic		500					67			89			116			79			116			33
+438 Bonsly		Rock		NULL		290					50			80			95			10			45			10
+439 Mime Jr.	Psychic		Fairy		310					20			25			45			70			90			60
 440 Happiny		Normal 220 100 5 5 15 65 30
 441 Chatot		Normal Flying 411 76 65 45 92 42 91
 442 Spiritomb	Ghost Dark 485 50 92 108 92 108 35
@@ -111,7 +111,7 @@ ID	Name		Type1		Type2		Max Possible HP		Base HP		Attack		Defense		Sp. Atk		Sp. D
 488 Cresselia	Psychic 600 120 70 120 75 130 85
 489 Phione		Water 480 80 80 80 80 80 80
 490 Manaphy		Water 600 100 100 100 100 100 100
-491 Darkrai		Dark 600 70 90 90 135 90 125
+491 Darkrai		Dark		NULL		600					70			90			90			135			90			125
 492 Shaymin		Land Forme Grass 600 100 100 100 100 100 100
 492 Shaymin		Sky Forme Grass Flying 600 100 103 75 120 75 127
 493 Arceus		Normal 720 120 120 120 120 120 120

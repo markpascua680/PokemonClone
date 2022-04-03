@@ -71,7 +71,7 @@ public:
 	// Text Functions
 	void setFont(std::string fontFile);
 	void setFontSize(int size);
-	void displayText(std::string text, SDL_Rect* dstRect);
+	void displayText(std::string text, SDL_Rect* dstRect, SDL_Color color);
 	
 	// Holds images with key = image name
 	std::map<std::string, Image> images;
@@ -90,6 +90,4 @@ private:
 	// Font
 	TTF_Font* _font;
 	int _fontSize;
-	SDL_Color _black = { 0, 0, 0 };
-	SDL_Color _white = { 255, 255, 255 };
 };

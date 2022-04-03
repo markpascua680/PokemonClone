@@ -84,7 +84,7 @@
 		std::string type1;
 		std::string type2;
 		int maxHp;
-		int hp;
+		int baseHp;
 		int atk;
 		int def;
 		int spAtk;
@@ -148,7 +148,7 @@ private:
 
 	// Player/Opponent dimensions on screen
 	SDL_Rect _playerPokemonRect = { 288, 540, 400, 400 };
-	SDL_Rect _opponentPokemonRect = { 1152, 270, 400, 400 };
+	SDL_Rect _opponentPokemonRect = { 1170, 250, 400, 400 };
 
 	// Button Rects; buttons at certain positions of the fight menu
 	SDL_Rect atkTopLeft = { 0, 930, 695, 80 };
@@ -156,14 +156,27 @@ private:
 	SDL_Rect atkBottomLeft = { 0, 1005, 695, 80 };
 	SDL_Rect atkBottomRight = { 700, 1005, 695, 80 };
 
-	// Text Boxes
-	SDL_Rect atkTopLeftTxt = { 30, 940, 695, 80 };
-	SDL_Rect atkTopRightTxt = { 730, 940, 695, 80 };
-	SDL_Rect atkBottomLeftTxt = { 30, 1015, 695, 80 };
-	SDL_Rect atkBottomRightTxt = { 730, 1015, 695, 80 };
-	SDL_Rect elementTypeTxt = { 1500, 940, 150, 40 };
-	SDL_Rect damageTypeTxt = { 1500, 980, 150, 40 };
-	SDL_Rect ppTxt = { 1500, 1020, 150, 40 };
+	// Text Boxes; width and height for these values are zero because they are set in displayText function of Interface.cpp
+		// Attacking menu text boxes
+	SDL_Rect atkTopLeftTxt = { 30, 940, 0, 0 };	
+	SDL_Rect atkTopRightTxt = { 730, 940, 0, 0 };															 
+	SDL_Rect atkBottomLeftTxt = { 30, 1015, 0, 0 };															 
+	SDL_Rect atkBottomRightTxt = { 730, 1015, 0, 0 };														 
+	SDL_Rect elementTypeTxt = { 1500, 940, 0, 0 };															 
+	SDL_Rect damageTypeTxt = { 1500, 980, 0, 0 };															 
+	SDL_Rect ppTxt = { 1500, 1020, 0, 0 };					
+
+		// HP Box Text Boxes
+	SDL_Rect playerPokemonNameTxt = { 1015, 630, 0, 0 };													 
+	SDL_Rect playerPokemonHPTxt = { 1300, 780, 0, 0 };
+	SDL_Rect playerPokemonLevelTxt = { 1600, 630, 0, 0 };
+	SDL_Rect opponentPokemonNameTxt = { 90, 130, 0, 0 };
+	SDL_Rect opponentPokemonHPTxt = { 375, 280, 0, 0 };
+	SDL_Rect opponentPokemonLevelTxt = { 675, 130, 0, 0 };
+
+	// Text colors
+	SDL_Color black = { 0, 0, 0 };	
+	SDL_Color white = { 255, 255, 255 };
 
 	// Game Data
 	bool _quitGame = false;
@@ -177,7 +190,8 @@ private:
 		POKEMON,
 		STATS,
 		BAG,
-		RUN
+		RUN,
+		MESSAGEBOX
 	};
 
 	menuState _menuState;
