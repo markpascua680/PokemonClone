@@ -24,9 +24,9 @@ Game::Game() {
 	initAttackList();
 	initImages();
 	initButtons();
-																							   // TODO: Implement tempHP for pokemon; make Pokemon a class?
+																							   
 	_playerPokemon = _pokemonList["Infernape"];												   // TODO: In the future, change isButtonHovered params to (mousePos, rect)
-	_playerPokemon.setAttack(_attackList["Scratch"], 0);
+	_playerPokemon.setAttack(_attackList["Scratch"], 0);									   // TODO: Implement damage type modifiers to calculation
 	_playerPokemon.setAttack(_attackList["DefenseCurl"], 1);
 	_playerPokemon.setAttack(_attackList["FireFang"], 2);
 	_playerPokemon.setAttack(_attackList["Ember"], 3);
@@ -102,6 +102,8 @@ void Game::handleButtonEvents(SDL_Event& e) {
 			SDL_Delay(100); // Prevent multiple inputs when clicking
 		}
 		break;
+
+	// Player chooses to use an attack
 	case Game::menuState::FIGHT:
 		
 		// Mouse click/hover events
@@ -113,6 +115,8 @@ void Game::handleButtonEvents(SDL_Event& e) {
 			if (e.type == SDL_MOUSEBUTTONDOWN) {
 
 				useAttack(_playerPokemon, _playerPokemon.attacks[0]);
+				double damage = calculateDamage(_playerPokemon, _opponentPokemon, _playerPokemon.attacks[0]);
+				decreaseHealth(_opponentPokemon, damage);
 			}
 		}
 
@@ -123,6 +127,8 @@ void Game::handleButtonEvents(SDL_Event& e) {
 			if (e.type == SDL_MOUSEBUTTONDOWN) {
 				
 				useAttack(_playerPokemon, _playerPokemon.attacks[1]);
+				double damage = calculateDamage(_playerPokemon, _opponentPokemon, _playerPokemon.attacks[1]);
+				decreaseHealth(_opponentPokemon, damage);
 			}
 		}
 
@@ -133,6 +139,8 @@ void Game::handleButtonEvents(SDL_Event& e) {
 			if (e.type == SDL_MOUSEBUTTONDOWN) {
 				
 				useAttack(_playerPokemon, _playerPokemon.attacks[2]);
+				double damage = calculateDamage(_playerPokemon, _opponentPokemon, _playerPokemon.attacks[2]);
+				decreaseHealth(_opponentPokemon, damage);
 			}
 		}
 
@@ -141,8 +149,10 @@ void Game::handleButtonEvents(SDL_Event& e) {
 			displayAttackInfo(_playerPokemon.attacks[3]);
 
 			if (e.type == SDL_MOUSEBUTTONDOWN) {
-				
+
 				useAttack(_playerPokemon, _playerPokemon.attacks[3]);
+				double damage = calculateDamage(_playerPokemon, _opponentPokemon, _playerPokemon.attacks[3]);
+				decreaseHealth(_opponentPokemon, damage);
 			}
 		}		
 

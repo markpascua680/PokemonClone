@@ -84,7 +84,7 @@
 		std::string type1;
 		std::string type2;
 		int maxHp;
-		int baseHp;
+		int tempHp;
 		int atk;
 		int def;
 		int spAtk;
@@ -135,13 +135,13 @@ class Game
 	}
 		
 		// Decrease pokemon HP when taking damage
-	void decreaseHealth(Pokemon pokemon, int damage);
+	void decreaseHealth(Pokemon& pokemon, double damage);
 
 		// Player or opponent uses an attack
 	void useAttack(Pokemon& pokemon, Attack& atk);
 
 	// Damage calculation
-	void calculateDamage(int power);
+	double calculateDamage(Pokemon& attacker, Pokemon& defender, Attack& attack);
 
 public:
 	Game();
@@ -179,15 +179,15 @@ private:
 
 		// HP Box Text Boxes
 	SDL_Rect playerPokemonNameTxt = { 1015, 630, 0, 0 };													 
-	SDL_Rect playerPokemonHPTxt = { 1300, 780, 0, 0 };
+	SDL_Rect playerPokemonHpTxt = { 1300, 780, 0, 0 };
 	SDL_Rect playerPokemonLevelTxt = { 1600, 630, 0, 0 };
 	SDL_Rect opponentPokemonNameTxt = { 90, 130, 0, 0 };
 	SDL_Rect opponentPokemonHPTxt = { 375, 280, 0, 0 };
 	SDL_Rect opponentPokemonLevelTxt = { 675, 130, 0, 0 };
 
 	// HP Bars
-	SDL_Rect playerHP = { 1096, 749, 364, 22 };
-	SDL_Rect opponentHP = { 170, 249, 364, 22 };
+	SDL_Rect playerHp = { 1096, 749, 364, 22 };
+	SDL_Rect opponentHp = { 170, 249, 364, 22 };
 
 	// Colors
 	SDL_Color black = { 0, 0, 0 };	

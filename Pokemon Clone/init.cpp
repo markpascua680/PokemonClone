@@ -55,7 +55,7 @@ void Game::initPokemon() { // Load the pokemon from database
 
 	// Reads data from file in this order
 	std::string id, name, type1, type2;
-	int maxHp, baseHp, atk, def, spAtk, spDef, speed;
+	int maxHp, tempHp, atk, def, spAtk, spDef, speed;
 
 	std::string value; // Read each value
 
@@ -70,14 +70,14 @@ void Game::initPokemon() { // Load the pokemon from database
 		iss >> type1;
 		iss >> type2;
 		iss >> maxHp;
-		iss >> baseHp;	// Hp at pokemon level 1
+		iss >> tempHp;	// Hp at pokemon level 1
 		iss >> atk;
 		iss >> def;
 		iss >> spAtk;
 		iss >> spDef;
 		iss >> speed;
 
-		Pokemon p = { id, name, type1, type2, maxHp, baseHp, atk, def, spAtk, spDef, speed };
+		Pokemon p = { id, name, type1, type2, maxHp, tempHp, atk, def, spAtk, spDef, speed };
 
 		_pokemonList[name] = p;
 	}

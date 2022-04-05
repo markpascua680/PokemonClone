@@ -21,9 +21,44 @@ void Game::useAttack(Pokemon& pokemon, Attack& atk) {
 	SDL_Delay(100); // Prevent multiple inputs when clicking
 }
 
-void Game::decreaseHealth(Pokemon pokemon, int damage) {
+// Damage calculation for decreaseHealth function
+double Game::calculateDamage(Pokemon& attacker, Pokemon& defender, Attack& attack) {
 
-	// tempHP -= 100;
-	// playerHP.w *= tempHP;
-	// playerHP.w /= _playerPokemon.maxHp;
+	double damage = 0;
+	double atkStat;
+	double defStat;
+
+	if (attack.getDamageType() == "Physical") {
+		
+		atkStat = attacker.atk;
+		defStat = defender.def;
+	}
+
+	else if (attack.getDamageType() == "Special") {
+
+		atkStat = attacker.spAtk;
+		defStat = defender.spDef;
+	}
+
+	// else if (attack.getDamageType() == "Status") {
+	// 
+	//		getStatusEffect();
+	// }
+
+		damage = 28.57 * atkStat * attack.getPower();
+		damage /= defStat;
+		damage /= 50;
+		damage += 2;
+		// damage *= type modifier / 10
+		damage *= 217;
+		damage /= 255;
+
+	return damage;
+}
+void Game::decreaseHealth(Pokemon& pokemon, double damage) {
+
+	if (pokemon.tempHp < damage)	// If damage is greater than remaining hp, set hp to 0
+		pokemon.tempHp = 0;
+	else
+		pokemon.tempHp -= damage;
 }
