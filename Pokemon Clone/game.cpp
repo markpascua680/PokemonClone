@@ -32,7 +32,7 @@ Game::Game() {
 	_playerPokemon.setAttack(_attackList["Ember"], 3);
 	makeAttackButtons();
 
-	_opponentPokemon = _pokemonList["Darkrai"];
+	_opponentPokemon = _pokemonList["Torterra"];
 	_opponentPokemon.setAttack(_attackList["Tackle"], 0);
 	_opponentPokemon.setAttack(_attackList["Growth"], 1);
 	_opponentPokemon.setAttack(_attackList["VineWhip"], 2);
@@ -48,8 +48,8 @@ void Game::run() {
 
 	SDL_Event e;
 
-	while (!_quitGame) {
-
+	while (!_gameOver) {
+		
 		_interface.clear();
 
 		_windowWidth = _interface.WINDOW_WIDTH;
@@ -64,7 +64,7 @@ void Game::run() {
 
 			// Window event handling
 			if (e.type == SDL_QUIT) {
-				_quitGame = true;
+				_gameOver = true;
 			}
 
 		}

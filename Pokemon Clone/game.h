@@ -133,15 +133,18 @@ class Game
 
 		_opponentPokemon = _pokemonList[name];
 	}
-		
-		// Decrease pokemon HP when taking damage
-	void decreaseHealth(Pokemon& pokemon, double damage);
 
 		// Player or opponent uses an attack
 	void useAttack(Pokemon& pokemon, Attack& atk);
 
-	// Damage calculation
+		// Determines the status effect of an attack that affects stats
+	void useStatusEffect(Pokemon& attacker, Pokemon& defender, Attack& atk);
+
+		// Damage calculation
 	double calculateDamage(Pokemon& attacker, Pokemon& defender, Attack& attack);
+
+		// Decrease pokemon HP when taking damage
+	void decreaseHealth(Pokemon& pokemon, double damage);
 
 public:
 	Game();
@@ -196,7 +199,7 @@ private:
 	SDL_Color red = { 255, 0, 0 };
 
 	// Game Data
-	bool _quitGame = false;
+	bool _gameOver = false;
 
 	// Game States
 	enum class menuState
