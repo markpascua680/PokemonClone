@@ -26,13 +26,13 @@ Game::Game() {
 	initButtons();
 																							   
 	_playerPokemon = _pokemonList["Infernape"];												   // TODO: In the future, change isButtonHovered params to (mousePos, rect)
-	_playerPokemon.setAttack(_attackList["Scratch"], 0);									   // TODO: Implement damage type modifiers to calculation
+	_playerPokemon.setAttack(_attackList["Scratch"], 0);									   
 	_playerPokemon.setAttack(_attackList["DefenseCurl"], 1);
 	_playerPokemon.setAttack(_attackList["FireFang"], 2);
 	_playerPokemon.setAttack(_attackList["Ember"], 3);
 	makeAttackButtons();
 
-	_opponentPokemon = _pokemonList["Torterra"];
+	_opponentPokemon = _pokemonList["Drifblim"];
 	_opponentPokemon.setAttack(_attackList["Tackle"], 0);
 	_opponentPokemon.setAttack(_attackList["Growth"], 1);
 	_opponentPokemon.setAttack(_attackList["VineWhip"], 2);
@@ -166,6 +166,7 @@ void Game::handleButtonEvents(SDL_Event& e) {
 	case Game::menuState::POKEMON:
 		break;
 	case Game::menuState::STATS:
+		
 		break;
 	case Game::menuState::BAG:
 		break;

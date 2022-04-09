@@ -143,6 +143,9 @@ class Game
 		// Damage calculation
 	double calculateDamage(Pokemon& attacker, Pokemon& defender, Attack& attack);
 
+		// Multiplies damage of attack based on elemental weakness
+	double getDamageMultiplier(Pokemon& defender, Attack& attack);
+
 		// Decrease pokemon HP when taking damage
 	void decreaseHealth(Pokemon& pokemon, double damage);
 
