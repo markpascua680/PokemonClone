@@ -63,31 +63,7 @@ void Game::displayUI() {
 
 	// Render Pokemon HP Boxes
 
-	double hpBarWidth = 364;	// Rect width of the hp bars
-	double scale;				// Used to resize hp bars accordingly
-
-		// Adjust hp bars to reflect damage taken
-		scale = (double)_playerPokemon.tempHp / (double)_playerPokemon.maxHp;
-
-		hpBarWidth *= scale;
-		playerHp.w = (int)hpBarWidth;
-
-		scale = (double)_opponentPokemon.tempHp / (double)_opponentPokemon.maxHp;
-
-		hpBarWidth *= scale;
-		opponentHp.w = (int)hpBarWidth;
-
-	_interface.displayImage("PlayerPokemonHPBox");	// Display the box template	
-	_interface.displayText(_playerPokemon.name, &playerPokemonNameTxt, white);	// Display pokemon name
-	_interface.displayText("Lvl. 100", &playerPokemonLevelTxt, white);	// Display pokemon level
-	_interface.displayText(std::to_string(_playerPokemon.tempHp) + "/" + std::to_string(_playerPokemon.maxHp), &playerPokemonHpTxt, black);	// Display pokemon HP
-	_interface.displayRect(&playerHp, green);	// Display player pokemon's HP bar
-
-	_interface.displayImage("OpponentPokemonHPBox");
-	_interface.displayText(_opponentPokemon.name, &opponentPokemonNameTxt, white);
-	_interface.displayText("Lvl. 100", &opponentPokemonLevelTxt, white);
-	_interface.displayText(std::to_string(_opponentPokemon.tempHp) + "/" + std::to_string(_opponentPokemon.maxHp), &opponentPokemonHPTxt, black);
-	_interface.displayRect(&opponentHp, green);
+	displayPokemonHPBoxes();
 
 	// Render UI menus
 	switch (_menuState)
@@ -129,4 +105,45 @@ void Game::displayUI() {
 	default:
 		break;
 	}
+}
+
+void  Game::displayPokemonHPBoxes() {
+
+	double hpBarWidth = 364;	// Rect width of the hp bars
+	double scale;				// Used to resize hp bars accordingly
+
+	// Adjust hp bars to reflect damage taken
+	scale = (double)_playerPokemon.tempHp / (double)_playerPokemon.maxHp;
+	hpBarWidth *= scale;
+	playerHp.w = (int)hpBarWidth;
+
+	hpBarWidth = 364;
+	scale = (double)_opponentPokemon.tempHp / (double)_opponentPokemon.maxHp;
+	hpBarWidth *= scale;
+	opponentHp.w = (int)hpBarWidth;
+
+	_interface.displayImage("PlayerPokemonHPBox");	// Display the box template	
+	_interface.displayText(_playerPokemon.name, &playerPokemonNameTxt, white);	// Display pokemon name
+	_interface.displayText("Lvl. 100", &playerPokemonLevelTxt, white);	// Display pokemon level
+	_interface.displayText(std::to_string(_playerPokemon.tempHp) + "/" + std::to_string(_playerPokemon.maxHp), &playerPokemonHpTxt, black);	// Display pokemon HP
+	_interface.displayRect(&playerHp, green);	// Display player pokemon's HP bar
+
+	_interface.displayImage("OpponentPokemonHPBox");
+	_interface.displayText(_opponentPokemon.name, &opponentPokemonNameTxt, white);
+	_interface.displayText("Lvl. 100", &opponentPokemonLevelTxt, white);
+	_interface.displayText(std::to_string(_opponentPokemon.tempHp) + "/" + std::to_string(_opponentPokemon.maxHp), &opponentPokemonHPTxt, black);
+	_interface.displayRect(&opponentHp, green);
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////// ANIMATION /////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
+
+void Game::animateDecreaseHealth(std::string attackMsg) {
+
+	_interface.clear();
+	displayUI();
+	_interface.displayImage("MessageBox");
+	_interface.displayText(attackMsg, &atkTopLeftTxt, white);
+	_interface.update();
 }

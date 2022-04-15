@@ -26,13 +26,13 @@ Game::Game() {
 	initButtons();
 																							   
 	_playerPokemon = _pokemonList["Infernape"];												   // TODO: In the future, change isButtonHovered params to (mousePos, rect)
-	_playerPokemon.setAttack(_attackList["Scratch"], 0);									   
+	_playerPokemon.setAttack(_attackList["Scratch"], 0);									   // TODO: Show type effectiveness message box after damage is shown
 	_playerPokemon.setAttack(_attackList["DefenseCurl"], 1);
 	_playerPokemon.setAttack(_attackList["FireFang"], 2);
 	_playerPokemon.setAttack(_attackList["Ember"], 3);
 	makeAttackButtons();
 
-	_opponentPokemon = _pokemonList["Drifblim"];
+	_opponentPokemon = _pokemonList["Infernape"];
 	_opponentPokemon.setAttack(_attackList["Tackle"], 0);
 	_opponentPokemon.setAttack(_attackList["Growth"], 1);
 	_opponentPokemon.setAttack(_attackList["VineWhip"], 2);
@@ -114,9 +114,7 @@ void Game::handleButtonEvents(SDL_Event& e) {
 
 			if (e.type == SDL_MOUSEBUTTONDOWN) {
 
-				useAttack(_playerPokemon, _playerPokemon.attacks[0]);
-				double damage = calculateDamage(_playerPokemon, _opponentPokemon, _playerPokemon.attacks[0]);
-				decreaseHealth(_opponentPokemon, damage);
+				useAttack(_playerPokemon, _opponentPokemon, _playerPokemon.attacks[0]);				
 			}
 		}
 
@@ -126,9 +124,7 @@ void Game::handleButtonEvents(SDL_Event& e) {
 
 			if (e.type == SDL_MOUSEBUTTONDOWN) {
 				
-				useAttack(_playerPokemon, _playerPokemon.attacks[1]);
-				double damage = calculateDamage(_playerPokemon, _opponentPokemon, _playerPokemon.attacks[1]);
-				decreaseHealth(_opponentPokemon, damage);
+				useAttack(_playerPokemon, _opponentPokemon, _playerPokemon.attacks[1]);
 			}
 		}
 
@@ -138,9 +134,7 @@ void Game::handleButtonEvents(SDL_Event& e) {
 
 			if (e.type == SDL_MOUSEBUTTONDOWN) {
 				
-				useAttack(_playerPokemon, _playerPokemon.attacks[2]);
-				double damage = calculateDamage(_playerPokemon, _opponentPokemon, _playerPokemon.attacks[2]);
-				decreaseHealth(_opponentPokemon, damage);
+				useAttack(_playerPokemon, _opponentPokemon, _playerPokemon.attacks[2]);
 			}
 		}
 
@@ -150,9 +144,7 @@ void Game::handleButtonEvents(SDL_Event& e) {
 
 			if (e.type == SDL_MOUSEBUTTONDOWN) {
 
-				useAttack(_playerPokemon, _playerPokemon.attacks[3]);
-				double damage = calculateDamage(_playerPokemon, _opponentPokemon, _playerPokemon.attacks[3]);
-				decreaseHealth(_opponentPokemon, damage);
+				useAttack(_playerPokemon, _opponentPokemon, _playerPokemon.attacks[3]);
 			}
 		}		
 

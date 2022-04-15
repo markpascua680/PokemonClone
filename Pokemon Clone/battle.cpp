@@ -10,15 +10,29 @@
 
 #include "game.h"
 
-void Game::useAttack(Pokemon& pokemon, Attack& atk) {
-	
+void Game::useAttack(Pokemon& attacker, Pokemon& defender, Attack& atk) {
+
+	std::string attackMessage = attacker.name + " used " + atk.getName() + "!";
+
 	_interface.displayImage("MessageBox");
-	_interface.displayText(pokemon.name + " used " + atk.getName() + "!", &atkTopLeftTxt, white);
+	_interface.displayText(attackMessage, &atkTopLeftTxt, white);
 	_interface.update();
-	SDL_Delay(1500); // Give time for player to read
+	SDL_Delay(1000);	// Give player time to read
 
 	atk.tempPP--; // Subtract 1 power point
-	SDL_Delay(100); // Prevent multiple inputs when clicking
+
+	// Calculate and deal damage if attack is not a status effect
+	double damage = calculateDamage(attacker, defender, atk);
+	decreaseHealth(defender, damage);
+
+	defender.tempHp += (int)damage;	// Defender's HP before damage was applied
+
+	// Animate decreasing health bar
+	for (int i = 0; i < (int)damage; i++) {
+
+		defender.tempHp--;
+		animateDecreaseHealth(attackMessage);
+	}
 }
 
 // Applies status effect according to the move used
@@ -65,6 +79,9 @@ double Game::calculateDamage(Pokemon& attacker, Pokemon& defender, Attack& attac
 	double atkStat;
 	double defStat;
 
+	// Multiplies damage if the attack type is effective against defender's type
+	double damageMultiplier = getDamageMultiplier(defender, attack);
+
 	if (attack.getDamageType() == "Physical") {
 		
 		atkStat = attacker.atk;
@@ -88,9 +105,33 @@ double Game::calculateDamage(Pokemon& attacker, Pokemon& defender, Attack& attac
 		damage /= defStat;
 		damage /= 50;
 		damage += 2;
-		damage *= getDamageMultiplier(defender, attack);
+		damage *= damageMultiplier;
 		damage *= 217;
 		damage /= 255;
+
+		// Let player know if their attack was effective/ineffective if damage multiplier != 1
+		if (damageMultiplier != 1) {
+
+			std::string message;
+
+			if (damageMultiplier == 0) {
+				message = "It wasn't very effective...";
+			}
+
+			if (damageMultiplier == 0.5) {
+				message = "It wasn't very effective...";
+			}
+
+			if (damageMultiplier == 2) {
+				message = "It was super effective!";
+			}
+
+			_interface.displayImage("MessageBox");
+			_interface.displayText(message, &atkTopLeftTxt, white);
+			_interface.update();
+
+			SDL_Delay(1500); // Give time for player to read
+		}
 
 	return damage;
 }
