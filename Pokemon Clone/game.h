@@ -19,6 +19,7 @@
 #include <string>
 #include <map>
 #include <vector>
+#include <random>
 #include "interface.h"
 
 // Holds attributes of each attack
@@ -92,7 +93,6 @@
 		int speed;
 
 		std::vector<Attack> attacks{ 4 }; // Each pokemon can have up to 4 attacks
-		std::vector<Button> attackButtons{ 4 }; // Buttons for each of the attacks
 
 		//Sets attack a at a certain position, up to 4 attacks can be set for one Pokemon
 		void setAttack(Attack a, int position) {
@@ -137,6 +137,9 @@ class Game
 
 		_opponentPokemon = _pokemonList[name];
 	}
+		
+		// Opponent's turn
+	void opponentTurn();
 
 		// Player or opponent uses an attack
 	void useAttack(Pokemon& attacker, Pokemon& defender, Attack& atk);
@@ -207,6 +210,7 @@ private:
 
 	// Game Data
 	bool _gameOver = false;
+	bool playerTurn;	// Determines who is attacking
 
 	// Game States
 	enum class menuState

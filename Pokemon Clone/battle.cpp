@@ -10,6 +10,20 @@
 
 #include "game.h"
 
+void Game::opponentTurn() {
+
+	std::random_device dev;
+	std::mt19937 rng(dev());
+	std::uniform_int_distribution<std::mt19937::result_type> range(0, 3); // Random number between 0 - 3
+
+	_interface.clear();
+	displayUI();
+
+	useAttack(_opponentPokemon, _playerPokemon, _opponentPokemon.attacks[range(rng)]);
+
+	playerTurn = true;
+}
+
 void Game::useAttack(Pokemon& attacker, Pokemon& defender, Attack& atk) {
 
 	std::string attackMessage = attacker.name + " used " + atk.getName() + "!";
@@ -17,7 +31,7 @@ void Game::useAttack(Pokemon& attacker, Pokemon& defender, Attack& atk) {
 	_interface.displayImage("MessageBox");
 	_interface.displayText(attackMessage, &atkTopLeftTxt, white);
 	_interface.update();
-	SDL_Delay(1000);	// Give player time to read
+	SDL_Delay(1500);	// Give player time to read
 
 	atk.tempPP--; // Subtract 1 power point
 
@@ -33,43 +47,55 @@ void Game::useAttack(Pokemon& attacker, Pokemon& defender, Attack& atk) {
 		defender.tempHp--;
 		animateDecreaseHealth(attackMessage);
 	}
+
+	_menuState = menuState::MAIN;
 }
 
 // Applies status effect according to the move used
 void Game::useStatusEffect(Pokemon& attacker, Pokemon& defender, Attack& atk) {
 
 	std::string status = atk.getName();
+	std::string message = "";
 
 	if (status == "Growth") {	// Raises attacker's attack stats
 		
 		attacker.atk += 5;
 		attacker.spAtk += 5;
+		message = attacker.name + "'s attack and special attack rose!";
 	}
 
 	if (status == "DefenseCurl") {	// Raises attacker's defense stats
 
 		attacker.def += 5;
 		attacker.spDef += 5;
+		message = attacker.name + "'s defense and special defense rose!";
 	}
 
 	if (status == "Smokescreen") {	// Lowers defender's defense stats
 
 		defender.def -= 5;
 		defender.spDef -= 5;
+		message = defender.name + "'s defense and special defense fell!";
 	}
 
 	if (status == "TailWhip") {		// Lowers defender's defense stats
 
 		defender.def -= 5;
 		defender.spDef -= 5;
+		message = defender.name + "'s defense and special defense fell!";
 	}
 
 	if (status == "PlayNice") {		// Lowers defender's attack stats
 
 		defender.atk -= 5;
 		defender.spAtk -= 5;
+		message = defender.name + "'s attack and special attack fell!";
 	}
 
+	_interface.displayImage("MessageBox");
+	_interface.displayText(message, &atkTopLeftTxt, white);
+	_interface.update();
+	SDL_Delay(2000);	// Give player time to read
 }
 
 // Damage calculation for decreaseHealth function

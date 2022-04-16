@@ -144,6 +144,5 @@ void Game::animateDecreaseHealth(std::string attackMsg) {
 	_interface.clear();
 	displayUI();
 	_interface.displayImage("MessageBox");
-	_interface.displayText(attackMsg, &atkTopLeftTxt, white);
 	_interface.update();
 }
