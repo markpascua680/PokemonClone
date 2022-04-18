@@ -21,6 +21,7 @@
 #include <vector>
 #include <random>
 #include "interface.h"
+#include "audio.h"
 
 // Holds attributes of each attack
 	class Attack {
@@ -124,6 +125,7 @@ class Game
 
 	// Animation
 	void animateDecreaseHealth(std::string attackMsg);
+	void animatePokemonFaint();
 
 	// Game States
 
@@ -170,6 +172,10 @@ private:
 	int _windowWidth;
 	int _windowHeight;
 
+	// Game Audio
+	Audio audio;
+	std::string buttonClick = "assets/audio/misc/button_click.wav";
+
 	// Player/Opponent dimensions on screen
 	SDL_Rect _playerPokemonRect = { 288, 540, 400, 400 };
 	SDL_Rect _opponentPokemonRect = { 1170, 250, 400, 400 };
@@ -209,8 +215,9 @@ private:
 	SDL_Color red = { 255, 0, 0 };
 
 	// Game Data
+	bool _gameRunning;
 	bool _gameOver = false;
-	bool playerTurn;	// Determines who is attacking
+	bool _playerTurn;	// Determines who is attacking
 
 	// Game States
 	enum class menuState

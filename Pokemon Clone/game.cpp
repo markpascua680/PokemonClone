@@ -11,6 +11,8 @@
 #include "game.h"
 
 Game::Game() {
+	audio.playMusic();
+	_gameRunning = true;
 
 	_interface.setFontSize(24);
 	_interface.setFont("assets/font/pokemonFont.ttf");
@@ -26,7 +28,7 @@ Game::Game() {
 	initButtons();
 																							   
 	_playerPokemon = _pokemonList["Infernape"];												   // TODO: In the future, change isButtonHovered params to (mousePos, rect)
-	_playerPokemon.setAttack(_attackList["Scratch"], 0);									   // TODO: Fix message box bug after using ineffective move
+	_playerPokemon.setAttack(_attackList["Scratch"], 0);									   
 	_playerPokemon.setAttack(_attackList["DefenseCurl"], 1);
 	_playerPokemon.setAttack(_attackList["FireFang"], 2);
 	_playerPokemon.setAttack(_attackList["Ember"], 3);
@@ -39,9 +41,9 @@ Game::Game() {
 	_opponentPokemon.setAttack(_attackList["RazorLeaf"], 3);
 
 	if (_playerPokemon.speed > _opponentPokemon.speed)
-		playerTurn = true;
+		_playerTurn = true;
 	else
-		playerTurn = false;
+		_playerTurn = false;
 }
 
 Game::~Game() {
@@ -54,11 +56,8 @@ void Game::run() {
 	SDL_Event e;
 
 
-	while (!_gameOver) {
+	while (_gameRunning) {
 		
-	if (_playerPokemon.tempHp == 0 || _opponentPokemon.tempHp == 0)
-		_gameOver == true;
-
 		_interface.clear();
 
 		_windowWidth = _interface.WINDOW_WIDTH;
@@ -67,16 +66,36 @@ void Game::run() {
 		displayUI();
 
 		// Button event handling
-		if (playerTurn)
+		if (!_gameOver) {
+
+			if (_playerTurn)
+				handleButtonEvents(e);
+			else
+				opponentTurn();
+		}
+
+		if (_gameOver) {
+
+			std::string message = "";
+			_interface.clear();
+			displayUI();
+			_interface.displayImage("MessageBox");
+
+			if (_opponentPokemon.tempHp == 0) 
+				message = "You won!";
+			else
+				message = "You lost! :(";
+
+			_interface.displayText(message, &atkTopLeftTxt, white);
+
 			handleButtonEvents(e);
-		else
-			opponentTurn();
+		}
 
 		while (SDL_PollEvent(&e) != 0) {
 
 			// Window event handling
 			if (e.type == SDL_QUIT) {
-				_gameOver = true;
+				_gameRunning = false;
 			}
 
 		}
@@ -84,11 +103,11 @@ void Game::run() {
 		// Update window
 		_interface.update();
 	}
+
 }
 
 // Button event handling
 void Game::handleButtonEvents(SDL_Event& e) {
-
 	SDL_Point mousePos = _interface.mousePos;
 
 	switch (_menuState)
@@ -100,15 +119,20 @@ void Game::handleButtonEvents(SDL_Event& e) {
 
 			if (_interface.isButtonHovered(mousePos, "Fight")) {
 				_menuState = menuState::FIGHT;
+				audio.playSound(buttonClick);
 			}
 
 			if (_interface.isButtonHovered(mousePos, "Pokemon")) {
+				audio.playSound(buttonClick);
 			}
 
 			if (_interface.isButtonHovered(mousePos, "Bag")) {
+				audio.playSound(buttonClick);
 			}
 
 			if (_interface.isButtonHovered(mousePos, "Run")) {
+				_gameRunning = false;
+				audio.playSound(buttonClick);
 			}
 
 			SDL_Delay(100); // Prevent multiple inputs when clicking
@@ -126,19 +150,22 @@ void Game::handleButtonEvents(SDL_Event& e) {
 
 			if (e.type == SDL_MOUSEBUTTONDOWN) {
 
-				useAttack(_playerPokemon, _opponentPokemon, _playerPokemon.attacks[0]);		
-				playerTurn = false;
+				audio.playSound(buttonClick);
+				useAttack(_playerPokemon, _opponentPokemon, _playerPokemon.attacks[0]);
+				_playerTurn = false;
 			}
 		}
 
 		if (_interface.isButtonHovered(mousePos, "Attack 2")) {
 
+
 			displayAttackInfo(_playerPokemon.attacks[1]);
 
 			if (e.type == SDL_MOUSEBUTTONDOWN) {
-				
+
+				audio.playSound(buttonClick);
 				useAttack(_playerPokemon, _opponentPokemon, _playerPokemon.attacks[1]);
-				playerTurn = false;
+				_playerTurn = false;
 			}
 		}
 
@@ -147,9 +174,10 @@ void Game::handleButtonEvents(SDL_Event& e) {
 			displayAttackInfo(_playerPokemon.attacks[2]);
 
 			if (e.type == SDL_MOUSEBUTTONDOWN) {
-				
+
+				audio.playSound(buttonClick);
 				useAttack(_playerPokemon, _opponentPokemon, _playerPokemon.attacks[2]);
-				playerTurn = false;
+				_playerTurn = false;
 			}
 		}
 
@@ -159,8 +187,9 @@ void Game::handleButtonEvents(SDL_Event& e) {
 
 			if (e.type == SDL_MOUSEBUTTONDOWN) {
 
+				audio.playSound(buttonClick);
 				useAttack(_playerPokemon, _opponentPokemon, _playerPokemon.attacks[3]);
-				playerTurn = false;
+				_playerTurn = false;
 			}
 		}		
 

@@ -21,11 +21,16 @@ void Game::opponentTurn() {
 
 	useAttack(_opponentPokemon, _playerPokemon, _opponentPokemon.attacks[range(rng)]);
 
-	playerTurn = true;
+	_playerTurn = true;
 }
 
 void Game::useAttack(Pokemon& attacker, Pokemon& defender, Attack& atk) {
 
+	// Play attack SFX
+	std::string filePath = "assets/audio/attackSFX/" + atk.getName() + ".wav";
+	audio.playSound(filePath);
+
+	// Display attack message
 	std::string attackMessage = attacker.name + " used " + atk.getName() + "!";
 
 	_interface.displayImage("MessageBox");
@@ -46,6 +51,28 @@ void Game::useAttack(Pokemon& attacker, Pokemon& defender, Attack& atk) {
 
 		defender.tempHp--;
 		animateDecreaseHealth(attackMessage);
+	}
+
+	if (_playerPokemon.tempHp == 0) {
+
+		_gameOver = true;
+		while (_playerPokemonRect.h >= 0) {
+
+			_playerPokemonRect.y += 20;
+			_playerPokemonRect.h -= 20;
+			animatePokemonFaint();
+		}
+	}
+
+	if (_opponentPokemon.tempHp == 0) {
+
+		_gameOver = true;
+		while (_opponentPokemonRect.h >= 0) {
+
+			_opponentPokemonRect.y += 20;
+			_opponentPokemonRect.h -= 20;
+			animatePokemonFaint();
+		}
 	}
 
 	_menuState = menuState::MAIN;

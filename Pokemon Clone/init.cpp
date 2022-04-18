@@ -10,6 +10,7 @@
 
 #include "game.h"
 
+// Creates a set of buttons to be displayed for the pokemon's attacks; matches the button color with the atack element type
 void Game::makeAttackButtons() {
 
 	for (int i = 0; i < 4; i++) {

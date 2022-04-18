@@ -55,7 +55,7 @@ void Game::displayUI() {
 	// Render battlefield background
 	_interface.displayImage("Battlefield");
 
-	// Render Pokemon
+	// Render Pokemon if they haven't fainted
 	displayPokemon(_playerPokemon.id);
 
 	if (_playerPokemon.id != _opponentPokemon.id) // Don't display opponent's pokemon if they have the same id, displayPokemon function will
@@ -140,6 +140,14 @@ void  Game::displayPokemonHPBoxes() {
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 void Game::animateDecreaseHealth(std::string attackMsg) {
+
+	_interface.clear();
+	displayUI();
+	_interface.displayImage("MessageBox");
+	_interface.update();
+}
+
+void Game::animatePokemonFaint() {
 
 	_interface.clear();
 	displayUI();
