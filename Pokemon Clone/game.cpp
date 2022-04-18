@@ -135,7 +135,7 @@ void Game::handleButtonEvents(SDL_Event& e) {
 				audio.playSound(buttonClick);
 			}
 
-			SDL_Delay(100); // Prevent multiple inputs when clicking
+			SDL_Delay(150); // Prevent multiple inputs when clicking
 		}
 		break;
 

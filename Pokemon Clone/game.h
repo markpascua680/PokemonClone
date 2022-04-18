@@ -124,8 +124,7 @@ class Game
 	void makeAttackButtons();
 
 	// Animation
-	void animateDecreaseHealth(std::string attackMsg);
-	void animatePokemonFaint();
+	void animate(std::string attackMsg);
 
 	// Game States
 

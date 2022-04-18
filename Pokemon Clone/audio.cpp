@@ -18,7 +18,7 @@ void Audio::playSound(std::string filePath) {
 		std::cout << "Music error: " << Mix_GetError() << std::endl;
 	}
 
-	Mix_VolumeChunk(sound, 10);
+	Mix_VolumeChunk(sound, 20);
 	Mix_PlayChannel(-1, sound, 0);
 }
 

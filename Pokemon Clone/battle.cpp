@@ -40,6 +40,30 @@ void Game::useAttack(Pokemon& attacker, Pokemon& defender, Attack& atk) {
 
 	atk.tempPP--; // Subtract 1 power point
 
+	// Animate pokemon getting hit
+	if (&defender == &_playerPokemon && atk.getDamageType() != "Status") {
+		int rectX = _playerPokemonRect.x;
+
+		for (int i = 0; i < 11; i++) {
+			_playerPokemonRect.x = _windowWidth;
+			SDL_Delay(20);
+			animate("");
+			_playerPokemonRect.x = rectX;
+			animate("");
+		}
+	}
+	if (&defender == &_opponentPokemon && atk.getDamageType() != "Status") {
+		int rectX = _opponentPokemonRect.x;
+
+		for (int i = 0; i < 11; i++) {
+			_opponentPokemonRect.x = _windowWidth;
+			SDL_Delay(20);
+			animate("");
+			_opponentPokemonRect.x = rectX;
+			animate("");
+		}
+	}
+
 	// Calculate and deal damage if attack is not a status effect
 	double damage = calculateDamage(attacker, defender, atk);
 	decreaseHealth(defender, damage);
@@ -50,9 +74,10 @@ void Game::useAttack(Pokemon& attacker, Pokemon& defender, Attack& atk) {
 	for (int i = 0; i < (int)damage; i++) {
 
 		defender.tempHp--;
-		animateDecreaseHealth(attackMessage);
+		animate(attackMessage);
 	}
 
+	// If pokemon fainted, animate faint
 	if (_playerPokemon.tempHp == 0) {
 
 		_gameOver = true;
@@ -60,10 +85,11 @@ void Game::useAttack(Pokemon& attacker, Pokemon& defender, Attack& atk) {
 
 			_playerPokemonRect.y += 20;
 			_playerPokemonRect.h -= 20;
-			animatePokemonFaint();
+			animate("");
 		}
 	}
 
+	// If pokemon fainted, animate faint
 	if (_opponentPokemon.tempHp == 0) {
 
 		_gameOver = true;
@@ -71,7 +97,7 @@ void Game::useAttack(Pokemon& attacker, Pokemon& defender, Attack& atk) {
 
 			_opponentPokemonRect.y += 20;
 			_opponentPokemonRect.h -= 20;
-			animatePokemonFaint();
+			animate("");
 		}
 	}
 

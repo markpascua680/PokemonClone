@@ -139,15 +139,7 @@ void  Game::displayPokemonHPBoxes() {
 //////////////////////////////////////// ANIMATION /////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-void Game::animateDecreaseHealth(std::string attackMsg) {
-
-	_interface.clear();
-	displayUI();
-	_interface.displayImage("MessageBox");
-	_interface.update();
-}
-
-void Game::animatePokemonFaint() {
+void Game::animate(std::string attackMsg) {
 
 	_interface.clear();
 	displayUI();
