@@ -56,53 +56,7 @@ void Game::run() {
 	SDL_Event e;
 
 
-	while (_gameRunning) {
-		
-		_interface.clear();
-
-		_windowWidth = _interface.WINDOW_WIDTH;
-		_windowHeight = _interface.WINDOW_HEIGHT;
-
-		displayUI();
-
-		// Button event handling
-		if (!_gameOver) {
-
-			if (_playerTurn)
-				handleButtonEvents(e);
-			else
-				opponentTurn();
-		}
-
-		if (_gameOver) {
-
-			std::string message = "";
-			_interface.clear();
-			displayUI();
-			_interface.displayImage("MessageBox");
-
-			if (_opponentPokemon.tempHp == 0) 
-				message = "You won!";
-			else
-				message = "You lost! :(";
-
-			_interface.displayText(message, &atkTopLeftTxt, white);
-
-			handleButtonEvents(e);
-		}
-
-		while (SDL_PollEvent(&e) != 0) {
-
-			// Window event handling
-			if (e.type == SDL_QUIT) {
-				_gameRunning = false;
-			}
-
-		}
-
-		// Update window
-		_interface.update();
-	}
+	battleLoop();
 
 }
 

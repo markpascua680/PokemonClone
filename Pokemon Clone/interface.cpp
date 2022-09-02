@@ -35,13 +35,18 @@ Interface::Interface() {
 		EXIT_FAILURE;
 	}
 
+	if (IMG_Init(IMG_INIT_PNG) < 0) {
+		std::cout << "UNABLE TO IMG_INIT" << std::endl;
+		EXIT_FAILURE;
+	}
+
 	if (TTF_Init() < 0) {
 		std::cout << "UNABLE TO TTF_INIT" << std::endl;
 		EXIT_FAILURE;
 	}
 
 	// Create window
-	_window = SDL_CreateWindow("Pokemon", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
+	_window = SDL_CreateWindow("Pokemon Clone", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
 
 	if (!_window) {
 		std::cout << "UNABLE TO CREATE WINDOW" << std::endl;
@@ -79,6 +84,21 @@ void Interface::render(SDL_Rect* clip, SDL_Rect* dstRect, std::string path) {
 	// Then render image over background
 	_texture = SDL_CreateTextureFromSurface(_renderer, image);
 	SDL_RenderCopy(_renderer, _texture, clip, dstRect);
+
+	SDL_DestroyTexture(_texture);
+	SDL_FreeSurface(image);
+}
+
+// Flips image
+void Interface::renderFlip(SDL_Rect* clip, SDL_Rect* dstRect, std::string path, double angle, const SDL_Point* center, SDL_RendererFlip flip) {
+
+	SDL_Surface* image = IMG_Load(path.c_str());
+	if (image == NULL)
+		std::cout << "UNABLE TO OPEN IMAGE" << std::endl;
+
+	// Then render image over background
+	_texture = SDL_CreateTextureFromSurface(_renderer, image);
+	SDL_RenderCopyEx(_renderer, _texture, clip, dstRect, angle, center, flip);
 
 	SDL_DestroyTexture(_texture);
 	SDL_FreeSurface(image);

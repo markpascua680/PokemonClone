@@ -127,6 +127,7 @@ class Game
 	void animate(std::string attackMsg);
 
 	// Game States
+	void battleLoop();
 
 	// Game Events
 	void changePlayerPokemon(std::string name) {
@@ -227,7 +228,8 @@ private:
 		STATS,
 		BAG,
 		RUN,
-		MESSAGEBOX
+		MESSAGEBOX,
+		START_MENU
 	};
 
 	menuState _menuState;

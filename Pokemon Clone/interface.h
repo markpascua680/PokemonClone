@@ -1,6 +1,7 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
+#include <iostream>
 #include <map>
 
 struct Image
@@ -52,6 +53,7 @@ public:
 	~Interface();
 
 	void render(SDL_Rect* clip, SDL_Rect* dstRect, std::string image);
+	void renderFlip(SDL_Rect* clip, SDL_Rect* dstRect, std::string path, double angle, const SDL_Point* center, SDL_RendererFlip flip);
 	void clear();
 	void update();
 
