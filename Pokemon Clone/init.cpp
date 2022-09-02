@@ -80,7 +80,7 @@ void Game::initPokemon() { // Load the pokemon from database
 
 		Pokemon p = { id, name, type1, type2, maxHp, tempHp, atk, def, spAtk, spDef, speed };
 
-		_pokemonList[name] = p;
+		_pokemonList[std::stoi(id)] = p;
 	}
 
 	pokemonData.close();
@@ -228,4 +228,12 @@ void Game::initButtons() {
 	}
 
 	buttonData.close();
+}
+
+Pokemon Game::getRandPokemon() {
+	std::random_device dev;
+	std::mt19937 rng(dev());
+	std::uniform_int_distribution<std::mt19937::result_type> num(387, 493);	// Range = pokemon ids
+
+	return _pokemonList[num(rng)];
 }

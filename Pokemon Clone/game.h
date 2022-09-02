@@ -114,6 +114,7 @@ class Game
 	void initAttackList();
 	void initImages();
 	void initButtons();
+	Pokemon getRandPokemon();
 
 	// Rendering
 	void displayPokemon(std::string id);
@@ -130,14 +131,14 @@ class Game
 	void battleLoop();
 
 	// Game Events
-	void changePlayerPokemon(std::string name) {
+	void changePlayerPokemon(const int& id) {
 
-		_playerPokemon = _pokemonList[name];
+		_playerPokemon = _pokemonList[id];
 	}
 
-	void changeOpponentPokemon(std::string name) {
+	void changeOpponentPokemon(const int& id) {
 
-		_opponentPokemon = _pokemonList[name];
+		_opponentPokemon = _pokemonList[id];
 	}
 		
 		// Opponent's turn
@@ -174,7 +175,7 @@ private:
 
 	// Game Audio
 	Audio audio;
-	std::string buttonClick = "assets/audio/misc/button_click.wav";
+	std::string buttonClickSFX = "assets/audio/misc/button_click.wav";
 
 	// Player/Opponent dimensions on screen
 	SDL_Rect _playerPokemonRect = { 288, 540, 400, 400 };
@@ -234,7 +235,7 @@ private:
 
 	menuState _menuState;
 
-	std::map<std::string, Pokemon> _pokemonList;
+	std::map<int, Pokemon> _pokemonList;
 	std::map<std::string, Attack> _attackList;
 
 	Pokemon _playerPokemon;

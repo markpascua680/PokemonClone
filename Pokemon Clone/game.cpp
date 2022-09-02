@@ -27,14 +27,14 @@ Game::Game() {
 	initImages();
 	initButtons();
 																							   
-	_playerPokemon = _pokemonList["Infernape"];												   // TODO: In the future, change isButtonHovered params to (mousePos, rect)
+	_playerPokemon = _pokemonList[392];
 	_playerPokemon.setAttack(_attackList["Scratch"], 0);									   
 	_playerPokemon.setAttack(_attackList["DefenseCurl"], 1);
 	_playerPokemon.setAttack(_attackList["FireFang"], 2);
 	_playerPokemon.setAttack(_attackList["Ember"], 3);
 	makeAttackButtons();
 
-	_opponentPokemon = _pokemonList["Torterra"];
+	_opponentPokemon = _pokemonList[389];
 	_opponentPokemon.setAttack(_attackList["Tackle"], 0);
 	_opponentPokemon.setAttack(_attackList["Growth"], 1);
 	_opponentPokemon.setAttack(_attackList["VineWhip"], 2);
@@ -73,20 +73,20 @@ void Game::handleButtonEvents(SDL_Event& e) {
 
 			if (_interface.isButtonHovered(mousePos, "Fight")) {
 				_menuState = menuState::FIGHT;
-				audio.playSound(buttonClick);
+				audio.playSound(buttonClickSFX);
 			}
 
 			if (_interface.isButtonHovered(mousePos, "Pokemon")) {
-				audio.playSound(buttonClick);
+				audio.playSound(buttonClickSFX);
 			}
 
 			if (_interface.isButtonHovered(mousePos, "Bag")) {
-				audio.playSound(buttonClick);
+				audio.playSound(buttonClickSFX);
 			}
 
 			if (_interface.isButtonHovered(mousePos, "Run")) {
 				_gameRunning = false;
-				audio.playSound(buttonClick);
+				audio.playSound(buttonClickSFX);
 			}
 
 			SDL_Delay(150); // Prevent multiple inputs when clicking
@@ -104,7 +104,7 @@ void Game::handleButtonEvents(SDL_Event& e) {
 
 			if (e.type == SDL_MOUSEBUTTONDOWN) {
 
-				audio.playSound(buttonClick);
+				audio.playSound(buttonClickSFX);
 				useAttack(_playerPokemon, _opponentPokemon, _playerPokemon.attacks[0]);
 				_playerTurn = false;
 			}
@@ -117,7 +117,7 @@ void Game::handleButtonEvents(SDL_Event& e) {
 
 			if (e.type == SDL_MOUSEBUTTONDOWN) {
 
-				audio.playSound(buttonClick);
+				audio.playSound(buttonClickSFX);
 				useAttack(_playerPokemon, _opponentPokemon, _playerPokemon.attacks[1]);
 				_playerTurn = false;
 			}
@@ -129,7 +129,7 @@ void Game::handleButtonEvents(SDL_Event& e) {
 
 			if (e.type == SDL_MOUSEBUTTONDOWN) {
 
-				audio.playSound(buttonClick);
+				audio.playSound(buttonClickSFX);
 				useAttack(_playerPokemon, _opponentPokemon, _playerPokemon.attacks[2]);
 				_playerTurn = false;
 			}
@@ -141,7 +141,7 @@ void Game::handleButtonEvents(SDL_Event& e) {
 
 			if (e.type == SDL_MOUSEBUTTONDOWN) {
 
-				audio.playSound(buttonClick);
+				audio.playSound(buttonClickSFX);
 				useAttack(_playerPokemon, _opponentPokemon, _playerPokemon.attacks[3]);
 				_playerTurn = false;
 			}

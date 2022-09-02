@@ -20,6 +20,8 @@ void Game::displayPokemon(std::string id) {
 
 		filepath = "assets/pokemon/sprites/" + id + ".png";
 		pokemon = _opponentPokemonRect;
+		int gap = _interface.images["MessageBox"].rect.y - (pokemon.y + pokemon.h);	// Ensures bottom of player sprite lines up with top of text bar (no floating sprites)
+		pokemon.y += gap;
 
 		_interface.render(NULL, &pokemon, filepath);
 

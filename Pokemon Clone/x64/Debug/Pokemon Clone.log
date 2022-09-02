@@ -1,5 +1,2 @@
-﻿  main.cpp
-  battle.cpp
-C:\Users\markp\source\repos\PokemonClone\Pokemon Clone\battle.cpp(385,21): warning C4244: '-=': conversion from 'double' to 'int', possible loss of data
-  Generating Code...
+﻿  gameUI.cpp
   Pokemon Clone.vcxproj -> C:\Users\markp\source\repos\PokemonClone\Pokemon Clone\x64\Debug\Pokemon Clone.exe
