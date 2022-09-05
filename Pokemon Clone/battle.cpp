@@ -13,15 +13,25 @@
 void Game::battleLoop() {
 	SDL_Event e;
 
+	audio.playMusic();
+
+	SDL_Delay(3500);
+
+	_interface.clear();
+
+	displayUI();
+
+	_interface.update();
+	SDL_Delay(2000);
+
 	while (_gameRunning) {
 
 		_interface.clear();
 
-		_windowWidth = _interface.WINDOW_WIDTH;
-		_windowHeight = _interface.WINDOW_HEIGHT;
-
 		displayUI();
 
+		_interface.update();
+		
 		// Button event handling
 		if (!_gameOver) {
 
@@ -31,6 +41,7 @@ void Game::battleLoop() {
 				opponentTurn();
 		}
 
+		// If a pokemon dies, game over
 		if (_gameOver) {
 
 			std::string message = "";
@@ -47,18 +58,6 @@ void Game::battleLoop() {
 
 			handleButtonEvents(e);
 		}
-
-		while (SDL_PollEvent(&e) != 0) {
-
-			// Window event handling
-			if (e.type == SDL_QUIT) {
-				_gameRunning = false;
-			}
-
-		}
-
-		// Update window
-		_interface.update();
 	}
 }
 

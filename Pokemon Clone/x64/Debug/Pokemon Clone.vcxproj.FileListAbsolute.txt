@@ -1,2 +1,2 @@
 C:\Users\markp\source\repos\Projects\Pokemon Clone\x64\Debug\Pokemon Clone.exe
-C:\Users\markp\Source\Repos\PokemonClone\Pokemon Clone\x64\Debug\Pokemon Clone.exe
+C:\Users\markp\source\repos\PokemonClone\Pokemon Clone\x64\Debug\Pokemon Clone.exe

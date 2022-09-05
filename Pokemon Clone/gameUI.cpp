@@ -54,34 +54,59 @@ void Game::displayAttackInfo(Attack& atk) {
 
 void Game::displayUI() {
 
-	// Render battlefield background
-	_interface.displayImage("Battlefield");
-
-	// Render Pokemon if they haven't fainted
-	displayPokemon(_playerPokemon.id);
-
-	if (_playerPokemon.id != _opponentPokemon.id) // Don't display opponent's pokemon if they have the same id, displayPokemon function will
-		displayPokemon(_opponentPokemon.id);	  // print them both at the same time if they're the same
-
-	// Render Pokemon HP Boxes
-
-	displayPokemonHPBoxes();
-
 	// Render UI menus
 	switch (_menuState)
 	{
+	case menuState::START_MENU:
+		_interface.displayImage("Background");
+		_interface.displayImage("MessageBox");
+		_interface.render(NULL, &selection1, "assets/pokemon/sprites/" + p1->id + ".png");
+		_interface.render(NULL, &selection2, "assets/pokemon/sprites/" + p2->id + ".png");
+		_interface.render(NULL, &selection3, "assets/pokemon/sprites/" + p3->id + ".png");
+		break;
 	case menuState::MAIN:
-		_interface.displayImage("Menu");
-		_interface.displayText("What will you do?", &atkTopLeftTxt, white);
+		// Render battlefield background
+		_interface.displayImage("Battlefield");
 
-		// Render Menu Buttons
-		_interface.displayButton("Fight");
-		_interface.displayButton("Pokemon");
-		_interface.displayButton("Bag");
-		_interface.displayButton("Run");
+		// Render Pokemon if they haven't fainted
+		displayPokemon(_playerPokemon.id);
+
+		if (_playerPokemon.id != _opponentPokemon.id) // Don't display opponent's pokemon if they have the same id, displayPokemon function will
+			displayPokemon(_opponentPokemon.id);	  // print them both at the same time if they're the same
+
+		// Render Pokemon HP Boxes
+		displayPokemonHPBoxes();
+
+
+		// Render Menu Text/Buttons
+		if (_playerTurn) {
+			_interface.displayImage("Menu");
+			_interface.displayText("What will you do?", &atkTopLeftTxt, white);
+
+			_interface.displayButton("Fight");
+			_interface.displayButton("Pokemon");
+			_interface.displayButton("Bag");
+			_interface.displayButton("Run");
+		}
+		else {
+			_interface.displayImage("MessageBox");
+			_interface.displayText("A wild " + _opponentPokemon.name + " appeared!", &atkTopLeftTxt, white);
+		}
 		break;
 
 	case menuState::FIGHT:
+		// Render battlefield background
+		_interface.displayImage("Battlefield");
+
+		// Render Pokemon if they haven't fainted
+		displayPokemon(_playerPokemon.id);
+
+		if (_playerPokemon.id != _opponentPokemon.id) // Don't display opponent's pokemon if they have the same id, displayPokemon function will
+			displayPokemon(_opponentPokemon.id);	  // print them both at the same time if they're the same
+
+		// Render Pokemon HP Boxes
+		displayPokemonHPBoxes();
+
 		_interface.displayImage("FightMenu");
 
 		// Render Attack Buttons

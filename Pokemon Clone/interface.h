@@ -64,7 +64,7 @@ public:
 	// Button Functions
 	void addButton(std::string button, SDL_Rect* srcRect, SDL_Rect* _hoverRect, SDL_Rect* dstRect, std::string filePath);
 	void displayButton(std::string button);
-	bool isButtonHovered(SDL_Point mousePos, std::string button);
+	bool isButtonHovered(SDL_Point mousePos, SDL_Rect rect);
 
 	// Image Functions
 	void addImage(std::string name, SDL_Rect* rect, std::string filePath);

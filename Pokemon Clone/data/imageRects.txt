@@ -1,4 +1,5 @@
 Name				FilePath									xDestination	yDestination	Width	Height
+Background			assets/images/whiteBackground.png			0				0				1920	1080
 Battlefield			assets/BattleUI/battleBackground.png		0				0				1920	930
 Menu				assets/BattleUI/battleCommand.png			0				930				1920	150
 MessageBox			assets/BattleUI/battleMessage.png			0				930				1920	150

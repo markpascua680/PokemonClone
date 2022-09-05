@@ -139,20 +139,17 @@ void Interface::displayButton(std::string button) {
 	
 	Button b = buttons[button];
 
-	SDL_GetMouseState(&mousePos.x, &mousePos.y);
-
 	// Display the button's hover image if mouse is over it, display original image if not
-	if (isButtonHovered(mousePos, button))
+	if (isButtonHovered(mousePos, b.dstRect))
 		render(&b.hoverRect, &b.dstRect, b.filePath);
 	else
 		render(&b.srcRect, &b.dstRect, b.filePath);
 }
 
 // Returns true if mouse is hovering over button
-bool Interface::isButtonHovered(SDL_Point mousePos, std::string button) {
+bool Interface::isButtonHovered(SDL_Point mousePos, SDL_Rect rect) {
 
-	Button b = buttons[button];
-	if (SDL_PointInRect(&mousePos, &b.dstRect)) {
+	if (SDL_PointInRect(&mousePos, &rect)) {
 		return true;
 	}
 

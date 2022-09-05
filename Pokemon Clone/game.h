@@ -128,6 +128,7 @@ class Game
 	void animate(std::string attackMsg);
 
 	// Game States
+	void startScreen();
 	void battleLoop();
 
 	// Game Events
@@ -176,6 +177,14 @@ private:
 	// Game Audio
 	Audio audio;
 	std::string buttonClickSFX = "assets/audio/misc/button_click.wav";
+
+	// Start menu values
+	Pokemon* p1 = new Pokemon;
+	Pokemon* p2 = new Pokemon;
+	Pokemon* p3 = new Pokemon;
+	SDL_Rect selection1 = { 200, 300, 400, 400 };
+	SDL_Rect selection2 = { 700, 300, 400, 400 };
+	SDL_Rect selection3 = { 1200, 300, 400, 400 };
 
 	// Player/Opponent dimensions on screen
 	SDL_Rect _playerPokemonRect = { 288, 540, 400, 400 };
