@@ -47,9 +47,9 @@ void Game::displayPokemon(std::string id) {
 
 void Game::displayAttackInfo(Attack& atk) {
 
-	_interface.displayText(atk.getElementType(), &elementTypeTxt, white);
-	_interface.displayText(atk.getDamageType(), &damageTypeTxt, white);
-	_interface.displayText(std::to_string(atk.tempPP) + "/" + std::to_string(atk.getPP()), &ppTxt, white);
+	_interface.displayText(atk.elementType, &elementTypeTxt, white);
+	_interface.displayText(atk.damageType, &damageTypeTxt, white);
+	_interface.displayText(std::to_string(atk.tempPP) + "/" + std::to_string(atk.pp), &ppTxt, white);
 }
 
 void Game::displayUI() {
@@ -60,9 +60,19 @@ void Game::displayUI() {
 	case menuState::START_MENU:
 		_interface.displayImage("Background");
 		_interface.displayImage("MessageBox");
-		_interface.render(NULL, &selection1, "assets/pokemon/sprites/" + p1->id + ".png");
-		_interface.render(NULL, &selection2, "assets/pokemon/sprites/" + p2->id + ".png");
-		_interface.render(NULL, &selection3, "assets/pokemon/sprites/" + p3->id + ".png");
+
+		// If player's Pokemon hasn't been defined yet
+		if (_playerPokemon.name == "") {
+			// Display player's choices
+			_interface.render(NULL, &selection1, "assets/pokemon/sprites/" + p1->id + ".png");
+			_interface.render(NULL, &selection2, "assets/pokemon/sprites/" + p2->id + ".png");
+			_interface.render(NULL, &selection3, "assets/pokemon/sprites/" + p3->id + ".png");
+		}
+		// Else display what the player chose to the center of screen
+		else {
+			_interface.render(NULL, &selection2, "assets/pokemon/sprites/" + _playerPokemon.id + ".png");
+			_interface.displayText("You selected " + _playerPokemon.name + "!", &atkTopLeftTxt, white);
+		}
 		break;
 	case menuState::MAIN:
 		// Render battlefield background
@@ -115,10 +125,10 @@ void Game::displayUI() {
 		_interface.displayButton("Attack 3");						
 		_interface.displayButton("Attack 4");						
 
-		_interface.displayText(_playerPokemon.attacks[0].getName(), &atkTopLeftTxt, white);
-		_interface.displayText(_playerPokemon.attacks[1].getName(), &atkTopRightTxt, white);
-		_interface.displayText(_playerPokemon.attacks[2].getName(), &atkBottomLeftTxt, white);
-		_interface.displayText(_playerPokemon.attacks[3].getName(), &atkBottomRightTxt, white);
+		_interface.displayText(_playerPokemon.attacks[0].name, &atkTopLeftTxt, white);
+		_interface.displayText(_playerPokemon.attacks[1].name, &atkTopRightTxt, white);
+		_interface.displayText(_playerPokemon.attacks[2].name, &atkBottomLeftTxt, white);
+		_interface.displayText(_playerPokemon.attacks[3].name, &atkBottomRightTxt, white);
 
 		break;
 	case menuState::POKEMON:

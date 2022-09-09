@@ -1,2 +1,12 @@
-﻿  gameUI.cpp
+﻿  init.cpp
+C:\Users\markp\source\repos\PokemonClone\Pokemon Clone\init.cpp(255,95): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=unsigned int
+          ]
+C:\Users\markp\source\repos\PokemonClone\Pokemon Clone\init.cpp(261,97): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=unsigned int
+          ]
   Pokemon Clone.vcxproj -> C:\Users\markp\source\repos\PokemonClone\Pokemon Clone\x64\Debug\Pokemon Clone.exe

@@ -30,8 +30,6 @@ void Game::battleLoop() {
 
 		displayUI();
 
-		_interface.update();
-		
 		// Button event handling
 		if (!_gameOver) {
 
@@ -58,6 +56,7 @@ void Game::battleLoop() {
 
 			handleButtonEvents(e);
 		}
+		_interface.update();
 	}
 }
 
@@ -78,11 +77,11 @@ void Game::opponentTurn() {
 void Game::useAttack(Pokemon& attacker, Pokemon& defender, Attack& atk) {
 
 	// Play attack SFX
-	std::string filePath = "assets/audio/attackSFX/" + atk.getName() + ".wav";
+	std::string filePath = "assets/audio/attackSFX/" + atk.name + ".wav";
 	audio.playSound(filePath);
 
 	// Display attack message
-	std::string attackMessage = attacker.name + " used " + atk.getName() + "!";
+	std::string attackMessage = attacker.name + " used " + atk.name + "!";
 
 	_interface.displayImage("MessageBox");
 	_interface.displayText(attackMessage, &atkTopLeftTxt, white);
@@ -92,7 +91,7 @@ void Game::useAttack(Pokemon& attacker, Pokemon& defender, Attack& atk) {
 	atk.tempPP--; // Subtract 1 power point
 
 	// Animate pokemon getting hit
-	if (&defender == &_playerPokemon && atk.getDamageType() != "Status") {
+	if (&defender == &_playerPokemon && atk.damageType != "Status") {
 		int rectX = _playerPokemonRect.x;
 
 		for (int i = 0; i < 11; i++) {
@@ -103,7 +102,7 @@ void Game::useAttack(Pokemon& attacker, Pokemon& defender, Attack& atk) {
 			animate("");
 		}
 	}
-	if (&defender == &_opponentPokemon && atk.getDamageType() != "Status") {
+	if (&defender == &_opponentPokemon && atk.damageType != "Status") {
 		int rectX = _opponentPokemonRect.x;
 
 		for (int i = 0; i < 11; i++) {
@@ -158,7 +157,7 @@ void Game::useAttack(Pokemon& attacker, Pokemon& defender, Attack& atk) {
 // Applies status effect according to the move used
 void Game::useStatusEffect(Pokemon& attacker, Pokemon& defender, Attack& atk) {
 
-	std::string status = atk.getName();
+	std::string status = atk.name;
 	std::string message = "";
 
 	if (status == "Growth") {	// Raises attacker's attack stats
@@ -212,26 +211,26 @@ double Game::calculateDamage(Pokemon& attacker, Pokemon& defender, Attack& attac
 	// Multiplies damage if the attack type is effective against defender's type
 	double damageMultiplier = getDamageMultiplier(defender, attack);
 
-	if (attack.getDamageType() == "Physical") {
+	if (attack.damageType == "Physical") {
 		
 		atkStat = attacker.atk;
 		defStat = defender.def;
 	}
 
-	else if (attack.getDamageType() == "Special") {
+	else if (attack.damageType == "Special") {
 
 		atkStat = attacker.spAtk;
 		defStat = defender.spDef;
 	}
 
-	else if (attack.getDamageType() == "Status") {
+	else if (attack.damageType == "Status") {
 	
 		useStatusEffect(attacker, defender, attack);
 
 		return 0;
 	}
 
-		damage = 28.57 * atkStat * attack.getPower();
+		damage = 28.57 * atkStat * attack.power;
 		damage /= defStat;
 		damage /= 50;
 		damage += 2;
@@ -271,7 +270,7 @@ double Game::calculateDamage(Pokemon& attacker, Pokemon& defender, Attack& attac
 // Only accounts for the pokemon's first type, not the second if there exists one
 double Game::getDamageMultiplier(Pokemon& defender, Attack& attack) {
 
-	std::string atkType = attack.getElementType();
+	std::string atkType = attack.elementType;
 	std::string defType = defender.type1;
 
 	// Holds the number ID of the types of attack and defender

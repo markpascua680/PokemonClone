@@ -26,56 +26,36 @@
 // Holds attributes of each attack
 	class Attack {
 	public:
-		int tempPP;
+		int pp;		// Max number of times attack can be used
+		int tempPP;	// Current number of times the attack can be used
+		std::string name;
+		std::string elementType;	// Fire, water, grass, etc.
+		std::string damageType;		// Physical/special damage or status effects
+		int power;
+		int accuracy;
 
 		Attack() {
 
 		}
 
 		Attack(
-			std::string name,        // Name of attack
-			std::string elementType,        // Grass, Fire, Water, etc.
-			std::string damageType,    // Physical, Special, Status effect, etc.
-			int power,				 // Base damage of the attack
-			int accuracy,			 // Chance of hitting attack
+			std::string n,        // Name of attack
+			std::string eT,        // Grass, Fire, Water, etc.
+			std::string dT,    // Physical, Special, Status effect, etc.
+			int p,				 // Base damage of the attack
+			int a,			 // Chance of hitting attack
 			int pp1					 // Power Points; how many times it can be used in battle
 		) {
-			_name = name;
-			_elementType = elementType;
-			_damageType = damageType;
-			_power = power;
-			_accuracy = accuracy;
-			_pp = pp1;
+			name = n;
+			elementType = eT;
+			damageType = dT;
+			power = p;
+			accuracy = a;
+			pp = pp1;
 			tempPP = pp1;
 		}
 
-		int getPower() {
-			return _power;
-		}
-
-		int getPP() {
-			return _pp;
-		}
-
-		std::string getName() {
-			return _name;
-		}
-
-		std::string getElementType() {	// FIre, water, grass, etc.
-			return _elementType;
-		}
-
-		std::string getDamageType() {	// Physical/special damage or status effects
-			return _damageType;
-		}
-
 	private:
-		std::string _name;
-		std::string _elementType;
-		std::string _damageType;
-		int _power;
-		int _accuracy;
-		int _pp;
 
 	};
 
@@ -94,17 +74,6 @@
 		int speed;
 
 		std::vector<Attack> attacks{ 4 }; // Each pokemon can have up to 4 attacks
-
-		//Sets attack a at a certain position, up to 4 attacks can be set for one Pokemon
-		void setAttack(Attack a, int position) {
-
-			if (attacks[position].getName() == "" && position < 4) {
-
-				attacks[position] = a;
-			}
-			else
-				std::cout << "Do you want to replace this attack with " << a.getName() << " ? " << std::endl;
-		}
 	};
 
 class Game
@@ -114,6 +83,9 @@ class Game
 	void initAttackList();
 	void initImages();
 	void initButtons();
+
+	// Setup player/opponent's pokemon their attacks
+	void assignAttacks(Pokemon& p);
 	Pokemon getRandPokemon();
 
 	// Rendering
@@ -245,7 +217,7 @@ private:
 	menuState _menuState;
 
 	std::map<int, Pokemon> _pokemonList;
-	std::map<std::string, Attack> _attackList;
+	std::map<int, Attack> _attackList;
 
 	Pokemon _playerPokemon;
 	Pokemon _opponentPokemon;

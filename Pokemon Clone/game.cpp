@@ -26,15 +26,19 @@ Game::Game() {
 	initImages();
 	initButtons();
 
+	// NOTE: Since the only attack types currently implemented have are limited, only get random pokemon with these types for now
 	*p1 = getRandPokemon();
+	while (p1->type1 != "Normal" && p1->type1 != "Grass" && p1->type1 != "Fire" && p1->type1 != "Water" && p1->type1 != "Electric") {
+		*p1 = getRandPokemon();
+	}
 	*p2 = getRandPokemon();
+	while (p2->type1 != "Normal" && p2->type1 != "Grass" && p2->type1 != "Fire" && p2->type1 != "Water" && p2->type1 != "Electric" && p2->id != p1->id) {	// Ensure no duplicates
+		*p2 = getRandPokemon();
+	}
 	*p3 = getRandPokemon();
-
-	_opponentPokemon = getRandPokemon();
-	_opponentPokemon.setAttack(_attackList["Tackle"], 0);
-	_opponentPokemon.setAttack(_attackList["Growth"], 1);
-	_opponentPokemon.setAttack(_attackList["VineWhip"], 2);
-	_opponentPokemon.setAttack(_attackList["RazorLeaf"], 3);
+	while (p3->type1 != "Normal" && p3->type1 != "Grass" && p3->type1 != "Fire" && p3->type1 != "Water" && p3->type1 != "Electric" && p3->id != p2->id && p3->id != p1->id) {	// Ensure no duplicates
+		*p3 = getRandPokemon();
+	}
 
 	if (_playerPokemon.speed > _opponentPokemon.speed)
 		_playerTurn = true;
@@ -53,20 +57,38 @@ void Game::startScreen() {
 
 	_menuState = Game::menuState::START_MENU;
 
-	while (_playerPokemon.name == "" && _gameRunning == true) {		// TODO: Complete this function
+	while (_playerPokemon.name == "" && _gameRunning == true) {		// TODO: get rid of player's awkward sprite cut off gap, create attacks for each pokemon
 		_interface.clear();
 
-		handleButtonEvents(e);
 		displayUI();
+		handleButtonEvents(e);
 
 		_interface.update();
 	}
 
-	_playerPokemon.setAttack(_attackList["Scratch"], 0);
-	_playerPokemon.setAttack(_attackList["DefenseCurl"], 1);
-	_playerPokemon.setAttack(_attackList["FireFang"], 2);
-	_playerPokemon.setAttack(_attackList["Ember"], 3);
+	_interface.clear();
+
+	displayUI();
+	handleButtonEvents(e);
+
+	_interface.update();
+	
+	// Randomly assign player's attacks after they choose their pokemon
+	assignAttacks(_playerPokemon);
 	makeAttackButtons();
+
+	// Assign opponent a pokemon that != player's pokemon
+	_opponentPokemon = getRandPokemon();
+	while (_opponentPokemon.id != _playerPokemon.id &&
+		_opponentPokemon.type1 != "Normal" &&
+		_opponentPokemon.type1 != "Grass" &&
+		_opponentPokemon.type1 != "Fire" &&
+		_opponentPokemon.type1 != "Water" &&
+		_opponentPokemon.type1 != "Electric") 
+	{
+		_opponentPokemon = getRandPokemon();
+	}
+	assignAttacks(_opponentPokemon);
 
 	_menuState = menuState::MAIN;
 
@@ -78,7 +100,9 @@ void Game::startScreen() {
 void Game::run() {
 
 	startScreen();
-	battleLoop();
+
+	if (_gameRunning)
+		battleLoop();
 
 }
 
@@ -96,21 +120,53 @@ void Game::handleButtonEvents(SDL_Event& e) {
 	switch (_menuState)
 	{
 	case Game::menuState::START_MENU:
+		if (_playerPokemon.name == "" && _interface.isButtonHovered(mousePos, selection1)) {
+			selection1.w = 500;
+			selection1.h = 500;
+			_interface.displayText("Select " + p1->name + "?", &atkTopLeftTxt, white);
+		}
+		else {
+			selection1.w = 400;
+			selection1.h = 400;
+		}
+
+		if (_playerPokemon.name == "" && _interface.isButtonHovered(mousePos, selection2)) {
+			selection2.w = 500;
+			selection2.h = 500;
+			_interface.displayText("Select " + p2->name + "?", &atkTopLeftTxt, white);
+		}
+		else {
+			selection2.w = 400;
+			selection2.h = 400;
+		}
+
+		if (_playerPokemon.name == "" && _interface.isButtonHovered(mousePos, selection3)) {
+			selection3.w = 500;
+			selection3.h = 500;
+			_interface.displayText("Select " + p3->name + "?", &atkTopLeftTxt, white);
+		}
+		else {
+			selection3.w = 400;
+			selection3.h = 400;
+		}
 
 		// Mouse click events
 		if (e.type == SDL_MOUSEBUTTONDOWN) {
 			if (_interface.isButtonHovered(mousePos, selection1)) {
 				_playerPokemon = *p1;
+				audio.playSound(buttonClickSFX);
 				break;
 			}
 
 			if (_interface.isButtonHovered(mousePos, selection2)) {
 				_playerPokemon = *p2;
+				audio.playSound(buttonClickSFX);
 				break;
 			}
 
 			if (_interface.isButtonHovered(mousePos, selection3)) {
 				_playerPokemon = *p3;
+				audio.playSound(buttonClickSFX);
 				break;
 			}
 		}

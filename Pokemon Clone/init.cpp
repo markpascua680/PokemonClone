@@ -14,7 +14,7 @@
 void Game::makeAttackButtons() {
 
 	for (int i = 0; i < 4; i++) {
-		std::string type = _playerPokemon.attacks[i].getElementType();
+		std::string type = _playerPokemon.attacks[i].elementType;
 
 		Button b = _interface.buttons[type];
 		std::string filepath = "assets/BattleUI/battleFightButtons.png";
@@ -105,6 +105,7 @@ void Game::initAttackList() {
 
 	std::getline(attackData, value); // Skip past first line of file
 
+	int count = 0;
 	while (std::getline(attackData, value)) {
 
 		std::istringstream iss(value);
@@ -118,8 +119,8 @@ void Game::initAttackList() {
 
 		Attack a = { name,elementType,damageType,power,accuracy,pp };
 
-		_attackList[name] = a;
-
+		_attackList[count] = a;
+		count++;
 	}
 
 	attackData.close();
@@ -228,6 +229,54 @@ void Game::initButtons() {
 	}
 
 	buttonData.close();
+}
+
+void Game::assignAttacks(Pokemon& p) {
+	// Get all the status effect attacks and regular attacks
+	std::vector<Attack> statusEffect;
+	std::vector<Attack> regularAttack;
+
+	for (auto const& x : _attackList) {
+		if (x.second.damageType == "Status") 
+			statusEffect.push_back(x.second);
+		else
+			regularAttack.push_back(x.second);
+	}
+
+	// Get the elemental types of the pokemon
+	std::string type1 = p.type1;
+	std::string type2;
+	if (p.type2 != "NULL")
+		type2 = p.type2;
+
+	// Random number generator
+	std::random_device dev;
+	std::mt19937 rng(dev());
+	std::uniform_int_distribution<std::mt19937::result_type> numStatus(0, statusEffect.size() - 1);
+
+	// Make their first attack a random status effect attack
+	p.attacks[0] = statusEffect[numStatus(rng)];
+
+	// Make their second attack a random normal-type attack, third and fourth attacks are attacks of the same element as the pokemon
+	std::uniform_int_distribution<std::mt19937::result_type> numRegular(0, regularAttack.size() - 1);
+	Attack a = regularAttack[numRegular(rng)];
+	while (p.attacks[1].name == "" || p.attacks[2].name == "" || p.attacks[3].name == "") {
+
+		// If pokemon doesn't have a second attack, assign it
+		if (p.attacks[1].name == "" && a.elementType == "Normal" && a.damageType != "Status")
+			p.attacks[1] = a;
+
+		// If pokemon doesn't have a third attack and is not a duplicate, assign it
+		if (p.attacks[2].name == "" && a.name != p.attacks[1].name && (a.elementType == type1 || a.elementType == type2))
+			p.attacks[2] = a;
+
+		// If pokemon doesn't have a fourth attack and is not a duplicate, assign it
+		if (p.attacks[3].name == "" && a.name != p.attacks[1].name && a.name != p.attacks[2].name && (a.elementType == type1 || a.elementType == type2))
+			p.attacks[3] = a;
+
+		// Get another random attack to be assigned if meets conditions
+		a = regularAttack[numRegular(rng)];
+	}
 }
 
 Pokemon Game::getRandPokemon() {
